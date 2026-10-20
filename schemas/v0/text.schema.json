@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/text.schema.json",
+  "title": "Text",
+  "description": "Localizable text. The server never sends translated strings: it sends a key and parameters, and the client renders them in the player's language using the ICU MessageFormat catalogs.",
+  "type": "object",
+  "required": ["text_key"],
+  "properties": {
+    "text_key": {
+      "description": "Dot-separated catalog key, e.g. rift.help_requested.",
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(\\.[a-z0-9_]+)+$"
+    },
+    "params": {
+      "description": "Named parameters for the ICU message.",
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean"]
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,10 @@
+{
+  "api_v": "0.1",
+  "type": "action",
+  "request_id": "c-0042",
+  "payload": {
+    "action": "attack",
+    "actor_id": "ent_pc_01",
+    "params": { "target_id": "ent_formless_07" }
+  }
+}

@@ -1,0 +1,43 @@
+asyncapi: 3.0.0
+info:
+  title: Anamorfa real-time protocol
+  version: "0.1"
+  description: |
+    Real-time channel between an Anamorfa client and the authoritative server.
+    Phase 0: envelope only. Game messages are added in Phase 3.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  local:
+    host: localhost:8080
+    protocol: ws
+    description: Local development server
+channels:
+  play:
+    address: /play
+    messages:
+      envelope:
+        $ref: '#/components/messages/Envelope'
+operations:
+  sendAction:
+    action: send
+    channel:
+      $ref: '#/channels/play'
+    messages:
+      - $ref: '#/channels/play/messages/envelope'
+  receiveEvent:
+    action: receive
+    channel:
+      $ref: '#/channels/play'
+    messages:
+      - $ref: '#/channels/play/messages/envelope'
+components:
+  messages:
+    Envelope:
+      name: Envelope
+      contentType: application/json
+      payload:
+        schemaFormat: application/schema+json;version=draft-2020-12
+        schema:
+          $ref: './schemas/v0/envelope.schema.json'

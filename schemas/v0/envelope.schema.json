@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/envelope.schema.json",
+  "title": "Envelope",
+  "description": "Every message exchanged between client and server is wrapped in this envelope.",
+  "type": "object",
+  "required": ["api_v", "type"],
+  "properties": {
+    "api_v": {
+      "description": "Protocol version, semantic versioning (MAJOR.MINOR).",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "type": {
+      "description": "Message type. Client to server: action. Server to client: action_accepted, action_rejected, event, snapshot, error.",
+      "type": "string",
+      "enum": ["action", "action_accepted", "action_rejected", "event", "snapshot", "error"]
+    },
+    "request_id": {
+      "description": "Client-chosen ID that links an action to its responses and events.",
+      "type": "string",
+      "maxLength": 64
+    },
+    "seq": {
+      "description": "Server event sequence number, strictly increasing per session. Used to resume after reconnecting.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "payload": {
+      "description": "Type-specific content, defined by the schema of each message type.",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}
