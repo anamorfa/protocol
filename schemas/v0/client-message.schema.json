@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/client-message.schema.json",
+  "title": "Client message",
+  "description": "The only message a client sends over /play: an action wrapped in the envelope.",
+  "type": "object",
+  "required": ["api_v", "type", "request_id", "payload"],
+  "properties": {
+    "api_v": { "$ref": "envelope.schema.json#/properties/api_v" },
+    "type": { "const": "action" },
+    "request_id": { "$ref": "common.schema.json#/$defs/request_id" },
+    "payload": { "$ref": "action.schema.json" }
+  },
+  "additionalProperties": false
+}

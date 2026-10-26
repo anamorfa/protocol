@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/session-request.schema.json",
+  "title": "Create session request",
+  "description": "Body of POST /sessions. Authentication is fake in Phase 3: a name is enough.",
+  "type": "object",
+  "required": ["player_name"],
+  "properties": {
+    "player_name": { "type": "string", "minLength": 1, "maxLength": 32 },
+    "seed": {
+      "description": "Optional. The same seed and the same actions always give the same fight.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    }
+  },
+  "additionalProperties": false
+}

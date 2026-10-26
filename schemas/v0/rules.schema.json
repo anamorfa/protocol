@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/rules.schema.json",
+  "title": "Rules",
+  "description": "Body of GET /rules: what clients need to explain the game, never to decide it.",
+  "type": "object",
+  "required": ["form_triangle", "weakness_bonus_percent", "slowed_move_every_rounds", "ink_cost"],
+  "properties": {
+    "form_triangle": {
+      "description": "Each form maps to the form it is strong against.",
+      "type": "object",
+      "propertyNames": { "$ref": "common.schema.json#/$defs/form" },
+      "additionalProperties": { "$ref": "common.schema.json#/$defs/form" }
+    },
+    "weakness_bonus_percent": { "type": "integer", "minimum": 0 },
+    "slowed_move_every_rounds": { "type": "integer", "minimum": 1 },
+    "ink_cost": {
+      "type": "object",
+      "required": ["reshape", "fix"],
+      "properties": {
+        "reshape": { "type": "integer", "minimum": 0 },
+        "fix": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

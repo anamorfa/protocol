@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/action.schema.json",
+  "title": "Action",
+  "description": "What a client asks the server to do. Clients copy action, actor_id and params from an entry of available_actions.",
+  "type": "object",
+  "allOf": [{ "$ref": "#/$defs/fields" }],
+  "unevaluatedProperties": false,
+  "$defs": {
+    "fields": {
+      "type": "object",
+      "required": ["action", "actor_id", "params"],
+      "properties": {
+        "action": { "enum": ["attack", "reshape", "fix", "move", "end_turn"] },
+        "actor_id": { "$ref": "common.schema.json#/$defs/id" },
+        "params": { "type": "object" }
+      },
+      "oneOf": [
+        { "type": "object", "properties": { "action": { "const": "attack" }, "params": { "$ref": "#/$defs/attack_params" } } },
+        { "type": "object", "properties": { "action": { "const": "reshape" }, "params": { "$ref": "#/$defs/reshape_params" } } },
+        { "type": "object", "properties": { "action": { "const": "fix" }, "params": { "$ref": "#/$defs/fix_params" } } },
+        { "type": "object", "properties": { "action": { "const": "move" }, "params": { "$ref": "#/$defs/move_params" } } },
+        { "type": "object", "properties": { "action": { "const": "end_turn" }, "params": { "$ref": "#/$defs/end_turn_params" } } }
+      ]
+    },
+    "attack_params": {
+      "type": "object",
+      "required": ["target_id", "essence"],
+      "properties": {
+        "target_id": { "$ref": "common.schema.json#/$defs/id" },
+        "essence": { "$ref": "common.schema.json#/$defs/essence" }
+      },
+      "additionalProperties": false
+    },
+    "reshape_params": {
+      "type": "object",
+      "required": ["essence", "form"],
+      "properties": {
+        "essence": { "$ref": "common.schema.json#/$defs/essence" },
+        "form": { "$ref": "common.schema.json#/$defs/form" }
+      },
+      "additionalProperties": false
+    },
+    "fix_params": {
+      "type": "object",
+      "required": ["target_id", "form"],
+      "properties": {
+        "target_id": { "$ref": "common.schema.json#/$defs/id" },
+        "form": { "$ref": "common.schema.json#/$defs/form" }
+      },
+      "additionalProperties": false
+    },
+    "move_params": {
+      "type": "object",
+      "required": ["to"],
+      "properties": { "to": { "$ref": "common.schema.json#/$defs/line" } },
+      "additionalProperties": false
+    },
+    "end_turn_params": { "type": "object", "maxProperties": 0 }
+  }
+}
