@@ -1,0 +1,8 @@
+{ "api_v": "0.1", "type": "event", "seq": 1,
+  "payload": {
+    "events": [
+      { "e": "initiative_rolled", "entity": "scribe_1", "d20": 12, "total": 14 },
+      { "e": "round_started", "round": 1 },
+      { "e": "turn_started", "entity": "scribe_1" } ],
+    "turn": { "actor": "scribe_1", "available_actions": [
+      { "action": "end_turn", "actor_id": "scribe_1", "params": {} } ] } } }

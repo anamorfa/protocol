@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/snapshot.schema.json",
+  "title": "Snapshot",
+  "description": "The whole state of a session's fight, sent on connection.",
+  "type": "object",
+  "required": ["session_id", "encounter", "round", "winner", "participants", "turn"],
+  "properties": {
+    "session_id": { "type": "string", "minLength": 1 },
+    "encounter": {
+      "type": "object",
+      "required": ["id", "name_key"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/id" },
+        "name_key": { "$ref": "common.schema.json#/$defs/text_key" }
+      },
+      "additionalProperties": false
+    },
+    "round": { "type": "integer", "minimum": 1 },
+    "winner": { "enum": ["scribes", "enemies", null] },
+    "participants": {
+      "type": "array",
+      "items": { "oneOf": [{ "$ref": "#/$defs/scribe" }, { "$ref": "#/$defs/formless" }] }
+    },
+    "turn": { "$ref": "turn.schema.json" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "scribe": {
+      "type": "object",
+      "required": ["id", "kind", "player_name", "side", "line", "hp", "max_hp", "ink", "max_ink",
+                   "attack_bonus", "defense", "arsenal"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/id" },
+        "kind": { "const": "scribe" },
+        "player_name": { "type": "string", "minLength": 1 },
+        "side": { "$ref": "common.schema.json#/$defs/side" },
+        "line": { "$ref": "common.schema.json#/$defs/line" },
+        "hp": { "type": "integer", "minimum": 0 },
+        "max_hp": { "type": "integer", "minimum": 1 },
+        "ink": { "type": "integer", "minimum": 0 },
+        "max_ink": { "type": "integer", "minimum": 0 },
+        "attack_bonus": { "type": "integer" },
+        "defense": { "type": "integer", "minimum": 0 },
+        "arsenal": {
+          "type": "object",
+          "propertyNames": { "$ref": "common.schema.json#/$defs/essence" },
+          "additionalProperties": { "$ref": "common.schema.json#/$defs/form" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "formless": {
+      "type": "object",
+      "required": ["id", "kind", "def_id", "name_key", "tags", "side", "line", "hp", "max_hp",
+                   "attack_bonus", "defense", "essence", "fixed_as", "weak_to", "slowed"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/id" },
+        "kind": { "const": "formless" },
+        "def_id": { "$ref": "common.schema.json#/$defs/id" },
+        "name_key": { "$ref": "common.schema.json#/$defs/text_key" },
+        "tags": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/id" } },
+        "side": { "$ref": "common.schema.json#/$defs/side" },
+        "line": { "$ref": "common.schema.json#/$defs/line" },
+        "hp": { "type": "integer", "minimum": 0 },
+        "max_hp": { "type": "integer", "minimum": 1 },
+        "attack_bonus": { "type": "integer" },
+        "defense": { "type": "integer", "minimum": 0 },
+        "essence": { "$ref": "common.schema.json#/$defs/essence" },
+        "fixed_as": { "$ref": "common.schema.json#/$defs/form_or_null" },
+        "weak_to": { "$ref": "common.schema.json#/$defs/form_or_null" },
+        "slowed": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
