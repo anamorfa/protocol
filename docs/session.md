@@ -38,6 +38,7 @@ Every message is in the envelope (`envelope`, `client-message`, `server-message`
 Keep the highest `seq` you have applied. After a drop, open
 `ws://<host>/play?token=<token>&since=<seq>`: the server resends every `event` message with a
 higher `seq`, in order, and nothing else. Without `since` you get a fresh `snapshot`.
+A `since` that is not a whole number, or is negative, counts as absent: you get a snapshot.
 
 ## Other endpoints
 
