@@ -1,0 +1,11 @@
+{ "api_v": "0.2", "type": "snapshot", "seq": 1,
+  "payload": {
+    "session_id": "s-1", "encounter": { "id": "rift_trial", "name_key": "encounter.rift_trial.name" },
+    "round": 1, "winner": null,
+    "participants": [
+      { "id": "formless_wanderer_1", "kind": "formless", "def_id": "formless_wanderer",
+        "name_key": "creature.formless_wanderer.name", "tags": ["formless", "hostile"],
+        "side": "enemies", "line": "front", "hp": 9, "max_hp": 9, "attack_bonus": 3, "defense": 11,
+        "essence": "cut", "form": "short_blade", "grip": "one_hand", "off_hand": null,
+        "fixed": false, "stable": false, "fixed_as": "shield" } ],
+    "turn": { "actor": null, "available_actions": [] } } }

@@ -29,7 +29,7 @@
     "scribe": {
       "type": "object",
       "required": ["id", "kind", "player_name", "side", "line", "hp", "max_hp", "ink", "max_ink",
-                   "attack_bonus", "defense", "arsenal"],
+                   "attack_bonus", "defense", "sets", "active_set"],
       "properties": {
         "id": { "$ref": "common.schema.json#/$defs/id" },
         "kind": { "const": "scribe" },
@@ -42,18 +42,15 @@
         "max_ink": { "type": "integer", "minimum": 0 },
         "attack_bonus": { "type": "integer" },
         "defense": { "type": "integer", "minimum": 0 },
-        "arsenal": {
-          "type": "object",
-          "propertyNames": { "$ref": "common.schema.json#/$defs/essence" },
-          "additionalProperties": { "$ref": "common.schema.json#/$defs/form" }
-        }
+        "sets": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/gear_set" }, "minItems": 1 },
+        "active_set": { "description": "0-based index into sets.", "type": "integer", "minimum": 0 }
       },
       "additionalProperties": false
     },
     "formless": {
       "type": "object",
       "required": ["id", "kind", "def_id", "name_key", "tags", "side", "line", "hp", "max_hp",
-                   "attack_bonus", "defense", "essence", "fixed_as", "weak_to", "slowed"],
+                   "attack_bonus", "defense", "essence", "form", "grip", "off_hand", "fixed", "stable"],
       "properties": {
         "id": { "$ref": "common.schema.json#/$defs/id" },
         "kind": { "const": "formless" },
@@ -67,9 +64,11 @@
         "attack_bonus": { "type": "integer" },
         "defense": { "type": "integer", "minimum": 0 },
         "essence": { "$ref": "common.schema.json#/$defs/essence" },
-        "fixed_as": { "$ref": "common.schema.json#/$defs/form_or_null" },
-        "weak_to": { "$ref": "common.schema.json#/$defs/form_or_null" },
-        "slowed": { "type": "boolean" }
+        "form": { "$ref": "common.schema.json#/$defs/form" },
+        "grip": { "$ref": "common.schema.json#/$defs/grip" },
+        "off_hand": { "oneOf": [{ "$ref": "common.schema.json#/$defs/off_hand" }, { "type": "null" }] },
+        "fixed": { "type": "boolean" },
+        "stable": { "type": "boolean" }
       },
       "additionalProperties": false
     }

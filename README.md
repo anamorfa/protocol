@@ -23,8 +23,8 @@ This repository holds the contract between the server and any client:
 
 ## Status
 
-Phase 3 — sessions over REST and the `/play` WebSocket: actions, numbered events, snapshots and
-reconnection. Start with [docs/session.md](docs/session.md).
+Protocol 0.2 — forms as content, gear sets and the two-way wheel, over REST and the `/play`
+WebSocket: actions, numbered events, snapshots and reconnection. Start with [docs/session.md](docs/session.md).
 
 ## License
 

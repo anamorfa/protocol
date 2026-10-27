@@ -15,9 +15,27 @@
       "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$"
     },
     "request_id": { "type": "string", "minLength": 1, "maxLength": 64 },
-    "essence": { "enum": ["cut", "barrier"] },
-    "form": { "enum": ["short_blade", "polearm", "bow", "shield"] },
-    "form_or_null": { "enum": ["short_blade", "polearm", "bow", "shield", null] },
+    "content_id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "essence": { "$ref": "#/$defs/content_id", "description": "Essence id from content, e.g. cut, pierce." },
+    "form": { "$ref": "#/$defs/content_id", "description": "Form id from content, e.g. short_blade, projectile." },
+    "grip": { "enum": ["one_hand", "two_hands"] },
+    "slot": { "enum": ["main_hand", "off_hand"] },
+    "hand": {
+      "type": "object", "additionalProperties": false,
+      "required": ["essence", "form", "grip"],
+      "properties": { "essence": { "$ref": "#/$defs/essence" }, "form": { "$ref": "#/$defs/form" }, "grip": { "$ref": "#/$defs/grip" } }
+    },
+    "off_hand": {
+      "type": "object", "additionalProperties": false,
+      "required": ["essence", "form"],
+      "properties": { "essence": { "$ref": "#/$defs/essence" }, "form": { "$ref": "#/$defs/form" } }
+    },
+    "gear_set": {
+      "type": "object", "additionalProperties": false,
+      "required": ["main_hand"],
+      "properties": { "main_hand": { "$ref": "#/$defs/hand" }, "off_hand": { "$ref": "#/$defs/off_hand" } }
+    },
+    "wheel_matchup": { "enum": ["advantage", "neutral", "disadvantage"] },
     "line": { "enum": ["front", "middle", "rear"] },
     "side": { "enum": ["scribes", "enemies"] }
   }

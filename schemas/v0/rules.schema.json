@@ -2,26 +2,58 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/rules.schema.json",
   "title": "Rules",
-  "description": "Body of GET /rules: what clients need to explain the game, never to decide it.",
+  "description": "Body of GET /rules: what clients need to explain the game and build gear sets, never to decide a fight.",
   "type": "object",
-  "required": ["form_triangle", "weakness_bonus_percent", "slowed_move_every_rounds", "ink_cost"],
+  "required": ["wheel", "forms", "essences", "weakness_bonus_percent", "max_sets", "ink_cost", "ink_gain"],
   "properties": {
-    "form_triangle": {
-      "description": "Each form maps to the form it is strong against.",
+    "wheel": {
+      "description": "Each form maps to the forms it is strong against.",
       "type": "object",
       "propertyNames": { "$ref": "common.schema.json#/$defs/form" },
-      "additionalProperties": { "$ref": "common.schema.json#/$defs/form" }
+      "additionalProperties": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/form" } }
+    },
+    "forms": {
+      "type": "object",
+      "propertyNames": { "$ref": "common.schema.json#/$defs/form" },
+      "additionalProperties": {
+        "type": "object", "additionalProperties": false, "required": ["name_key", "slot", "grips", "reach"],
+        "properties": {
+          "name_key": { "$ref": "common.schema.json#/$defs/text_key" },
+          "slot": { "$ref": "common.schema.json#/$defs/slot" },
+          "grips": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/grip" }, "minItems": 1 },
+          "reach": {
+            "type": "object", "additionalProperties": false, "required": ["from", "to"],
+            "properties": {
+              "from": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/line" } },
+              "to": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/line" } }
+            }
+          }
+        }
+      }
+    },
+    "essences": {
+      "type": "object",
+      "propertyNames": { "$ref": "common.schema.json#/$defs/essence" },
+      "additionalProperties": {
+        "type": "object", "additionalProperties": false, "required": ["name_key", "forms"],
+        "properties": {
+          "name_key": { "$ref": "common.schema.json#/$defs/text_key" },
+          "forms": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/form" } }
+        }
+      }
     },
     "weakness_bonus_percent": { "type": "integer", "minimum": 0 },
-    "slowed_move_every_rounds": { "type": "integer", "minimum": 1 },
+    "max_sets": { "type": "integer", "minimum": 1 },
     "ink_cost": {
-      "type": "object",
-      "required": ["reshape", "fix"],
+      "type": "object", "additionalProperties": false, "required": ["reshape", "fix"],
+      "properties": { "reshape": { "type": "integer", "minimum": 0 }, "fix": { "type": "integer", "minimum": 0 } }
+    },
+    "ink_gain": {
+      "type": "object", "additionalProperties": false, "required": ["every_rounds", "per_downed_enemy"],
       "properties": {
-        "reshape": { "type": "integer", "minimum": 0 },
-        "fix": { "type": "integer", "minimum": 0 }
-      },
-      "additionalProperties": false
+        "every_rounds": { "type": "integer", "minimum": 1 },
+        "per_downed_enemy": { "type": "integer", "minimum": 0 }
+      }
     }
   },
   "additionalProperties": false

@@ -25,29 +25,21 @@
     },
     "attack_params": {
       "type": "object",
-      "required": ["target_id", "essence"],
-      "properties": {
-        "target_id": { "$ref": "common.schema.json#/$defs/id" },
-        "essence": { "$ref": "common.schema.json#/$defs/essence" }
-      },
+      "required": ["target_id"],
+      "properties": { "target_id": { "$ref": "common.schema.json#/$defs/id" } },
       "additionalProperties": false
     },
     "reshape_params": {
+      "description": "Switch to the gear set at this 0-based index.",
       "type": "object",
-      "required": ["essence", "form"],
-      "properties": {
-        "essence": { "$ref": "common.schema.json#/$defs/essence" },
-        "form": { "$ref": "common.schema.json#/$defs/form" }
-      },
+      "required": ["set"],
+      "properties": { "set": { "type": "integer", "minimum": 0 } },
       "additionalProperties": false
     },
     "fix_params": {
       "type": "object",
-      "required": ["target_id", "form"],
-      "properties": {
-        "target_id": { "$ref": "common.schema.json#/$defs/id" },
-        "form": { "$ref": "common.schema.json#/$defs/form" }
-      },
+      "required": ["target_id"],
+      "properties": { "target_id": { "$ref": "common.schema.json#/$defs/id" } },
       "additionalProperties": false
     },
     "move_params": {

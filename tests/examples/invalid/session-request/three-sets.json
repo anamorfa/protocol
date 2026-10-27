@@ -1,0 +1,5 @@
+{ "player_name": "Ana",
+  "sets": [
+    { "main_hand": { "essence": "cut", "form": "short_blade", "grip": "one_hand" } },
+    { "main_hand": { "essence": "pierce", "form": "projectile", "grip": "two_hands" } },
+    { "main_hand": { "essence": "cut", "form": "polearm", "grip": "two_hands" } } ] }

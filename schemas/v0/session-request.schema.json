@@ -7,6 +7,17 @@
   "required": ["player_name"],
   "properties": {
     "player_name": { "type": "string", "minLength": 1, "maxLength": 32 },
+    "encounter": {
+      "description": "Optional. Defaults to rift_trial.",
+      "enum": ["rift_trial", "rift_first_steps"]
+    },
+    "sets": {
+      "description": "Optional. The gear sets the Scribe prepares; the first one is active. Defaults to the starting loadout.",
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/gear_set" },
+      "minItems": 1,
+      "maxItems": 2
+    },
     "seed": {
       "description": "Optional. The same seed and the same actions always give the same fight.",
       "type": "integer",

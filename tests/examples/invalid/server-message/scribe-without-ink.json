@@ -1,8 +1,8 @@
-{ "api_v": "0.1", "type": "snapshot", "seq": 1,
+{ "api_v": "0.2", "type": "snapshot", "seq": 1,
   "payload": {
     "session_id": "s-1", "encounter": { "id": "rift_trial", "name_key": "encounter.rift_trial.name" },
     "round": 1, "winner": null,
     "participants": [
       { "id": "scribe_1", "kind": "scribe", "player_name": "Ronald", "side": "scribes", "line": "front",
-        "hp": 20, "max_hp": 20, "attack_bonus": 4, "defense": 13, "arsenal": { "cut": "short_blade" } } ],
+        "hp": 20, "max_hp": 20, "attack_bonus": 4, "defense": 13, "sets": [ { "main_hand": { "essence": "cut", "form": "short_blade", "grip": "one_hand" } } ], "active_set": 0 } ],
     "turn": { "actor": "scribe_1", "available_actions": [] } } }

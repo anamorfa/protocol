@@ -1,2 +1,2 @@
-{ "api_v": "0.1", "type": "action_rejected", "request_id": "c-1",
+{ "api_v": "0.2", "type": "action_rejected", "request_id": "c-1",
   "payload": { "reason_key": "action.rejected.out_of_reach" } }

@@ -1,3 +1,0 @@
-{ "form_triangle": { "polearm": "short_blade", "short_blade": "bow", "bow": "polearm" },
-  "weakness_bonus_percent": 50, "slowed_move_every_rounds": 2,
-  "ink_cost": { "reshape": 1, "fix": 2 } }

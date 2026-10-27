@@ -1,0 +1,5 @@
+{ "player_name": "Ana", "encounter": "rift_trial", "seed": 7,
+  "sets": [
+    { "main_hand": { "essence": "cut", "form": "short_blade", "grip": "one_hand" },
+      "off_hand": { "essence": "barrier", "form": "shield" } },
+    { "main_hand": { "essence": "pierce", "form": "projectile", "grip": "two_hands" } } ] }

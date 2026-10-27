@@ -1,9 +1,9 @@
-{ "api_v": "0.1", "type": "event", "seq": 9, "request_id": "c-8",
+{ "api_v": "0.2", "type": "event", "seq": 9, "request_id": "c-8",
   "payload": {
     "events": [
       { "e": "moved", "entity": "scribe_1", "from": "front", "to": "middle" },
       { "e": "ink_spent", "entity": "scribe_1", "amount": 1, "remaining": 3 },
-      { "e": "reshaped", "entity": "scribe_1", "essence": "cut", "from": "short_blade", "to": "bow" },
+      { "e": "reshaped", "entity": "scribe_1", "from": 0, "to": 1 },
       { "e": "downed", "entity": "formless_wanderer_2" },
       { "e": "combat_ended", "winner": "scribes" } ],
     "turn": { "actor": null, "available_actions": [] } } }

@@ -1,0 +1,16 @@
+{ "wheel": { "polearm": ["short_blade"], "short_blade": ["projectile"], "projectile": ["polearm"] },
+  "forms": {
+    "short_blade": { "name_key": "form.short_blade.name", "slot": "main_hand", "grips": ["one_hand"],
+                     "reach": { "from": ["front"], "to": ["front"] } },
+    "polearm": { "name_key": "form.polearm.name", "slot": "main_hand", "grips": ["two_hands"],
+                 "reach": { "from": ["front", "middle"], "to": ["front", "middle"] } },
+    "projectile": { "name_key": "form.projectile.name", "slot": "main_hand", "grips": ["one_hand", "two_hands"],
+                    "reach": { "from": ["front", "middle", "rear"], "to": ["front", "middle", "rear"] } },
+    "shield": { "name_key": "form.shield.name", "slot": "off_hand", "grips": ["one_hand"],
+                "reach": { "from": ["front"], "to": ["front"] } } },
+  "essences": {
+    "cut": { "name_key": "essence.cut.name", "forms": ["short_blade", "polearm"] },
+    "pierce": { "name_key": "essence.pierce.name", "forms": ["polearm", "projectile"] },
+    "barrier": { "name_key": "essence.barrier.name", "forms": ["shield"] } },
+  "weakness_bonus_percent": 50, "max_sets": 2,
+  "ink_cost": { "reshape": 1, "fix": 2 }, "ink_gain": { "every_rounds": 3, "per_downed_enemy": 1 } }

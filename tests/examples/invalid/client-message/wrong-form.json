@@ -1,2 +1,2 @@
-{ "api_v": "0.1", "type": "action", "request_id": "c-1",
-  "payload": { "action": "reshape", "actor_id": "scribe_1", "params": { "essence": "cut", "form": "spear" } } }
+{ "api_v": "0.2", "type": "action", "request_id": "c-1",
+  "payload": { "action": "reshape", "actor_id": "scribe_1", "params": { "set": "second" } } }

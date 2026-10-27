@@ -4,7 +4,6 @@
   "title": "Available action",
   "description": "An action the player may take now. Send action, actor_id and params back as the payload of an action message; the other fields only help to draw it.",
   "type": "object",
-  "allOf": [{ "$ref": "action.schema.json#/$defs/fields" }],
   "properties": {
     "odds": {
       "type": "object",
@@ -17,7 +16,7 @@
       },
       "additionalProperties": false
     },
-    "strong_against_target": { "type": "boolean" },
+    "wheel": { "$ref": "common.schema.json#/$defs/wheel_matchup" },
     "cost": {
       "type": "object",
       "required": ["uses"],
@@ -26,8 +25,15 @@
         "uses": { "enum": ["movement", "action", "bonus_action", "movement_and_action"] }
       },
       "additionalProperties": false
-    },
-    "gives_weakness": { "$ref": "common.schema.json#/$defs/form_or_null" }
+    }
   },
+  "allOf": [
+    { "$ref": "action.schema.json#/$defs/fields" },
+    { "if": { "properties": { "action": { "const": "attack" } }, "required": ["action"] },
+      "then": { "required": ["wheel"], "properties": { "wheel": true } } },
+    { "if": { "properties": { "action": { "enum": ["fix", "reshape"] } }, "required": ["action"] },
+      "then": { "required": ["cost"],
+                "properties": { "cost": { "type": "object", "required": ["ink", "uses"], "properties": { "ink": true, "uses": { "const": "action" } } } } } }
+  ],
   "unevaluatedProperties": false
 }
