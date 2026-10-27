@@ -1,0 +1,23 @@
+{ "api_v": "0.1", "type": "event", "seq": 2, "request_id": "c-1",
+  "payload": {
+    "events": [
+      { "e": "attack_rolled", "actor": "scribe_1", "target": "formless_wanderer_1", "essence": "cut",
+        "form": "short_blade", "d20": 17, "total": 21, "defense": 11, "result": "hit" },
+      { "e": "damaged", "target": "formless_wanderer_1", "rolled": 6, "weakness": 0, "resisted": 3,
+        "absorbed": 0, "dealt": 3, "hp": 6 },
+      { "e": "turn_ended", "entity": "scribe_1" },
+      { "e": "turn_started", "entity": "formless_wanderer_1" },
+      { "e": "attack_rolled", "actor": "formless_wanderer_1", "target": "scribe_1", "essence": "cut",
+        "form": null, "d20": 4, "total": 7, "defense": 13, "result": "miss" },
+      { "e": "turn_ended", "entity": "formless_wanderer_1" },
+      { "e": "round_started", "round": 2 },
+      { "e": "ink_gained", "entity": "scribe_1", "amount": 1, "remaining": 6 },
+      { "e": "fixed", "actor": "scribe_1", "target": "formless_wanderer_1", "form": "shield",
+        "weak_to": null, "slowed": true },
+      { "e": "turn_started", "entity": "scribe_1" } ],
+    "turn": { "actor": "scribe_1", "available_actions": [
+      { "action": "reshape", "actor_id": "scribe_1", "params": { "essence": "cut", "form": "polearm" },
+        "cost": { "ink": 1, "uses": "bonus_action" } },
+      { "action": "move", "actor_id": "scribe_1", "params": { "to": "rear" },
+        "cost": { "uses": "movement_and_action" } },
+      { "action": "end_turn", "actor_id": "scribe_1", "params": {} } ] } } }

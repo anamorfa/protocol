@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/common.schema.json",
+  "title": "Common definitions",
+  "description": "Identifiers shared by the other schemas.",
+  "$defs": {
+    "id": {
+      "description": "Entity, definition or encounter id, e.g. scribe_1, formless_wanderer, rift_trial.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "text_key": {
+      "description": "Catalog key, e.g. creature.formless_wanderer.name.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$"
+    },
+    "request_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "essence": { "enum": ["cut", "barrier"] },
+    "form": { "enum": ["short_blade", "polearm", "bow", "shield"] },
+    "form_or_null": { "enum": ["short_blade", "polearm", "bow", "shield", null] },
+    "line": { "enum": ["front", "middle", "rear"] },
+    "side": { "enum": ["scribes", "enemies"] }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/server-message.schema.json",
+  "title": "Server message",
+  "description": "Every message the server sends over /play.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/action_accepted" },
+    { "$ref": "#/$defs/action_rejected" },
+    { "$ref": "#/$defs/event" },
+    { "$ref": "#/$defs/snapshot" },
+    { "$ref": "#/$defs/error" }
+  ],
+  "$defs": {
+    "api_v": { "$ref": "envelope.schema.json#/properties/api_v" },
+    "reason": {
+      "type": "object",
+      "required": ["reason_key"],
+      "properties": { "reason_key": { "$ref": "common.schema.json#/$defs/text_key" } },
+      "additionalProperties": false
+    },
+    "action_accepted": {
+      "type": "object",
+      "required": ["api_v", "type", "request_id"],
+      "properties": {
+        "api_v": { "$ref": "#/$defs/api_v" },
+        "type": { "const": "action_accepted" },
+        "request_id": { "$ref": "common.schema.json#/$defs/request_id" }
+      },
+      "additionalProperties": false
+    },
+    "action_rejected": {
+      "type": "object",
+      "required": ["api_v", "type", "request_id", "payload"],
+      "properties": {
+        "api_v": { "$ref": "#/$defs/api_v" },
+        "type": { "const": "action_rejected" },
+        "request_id": { "$ref": "common.schema.json#/$defs/request_id" },
+        "payload": { "$ref": "#/$defs/reason" }
+      },
+      "additionalProperties": false
+    },
+    "event": {
+      "type": "object",
+      "required": ["api_v", "type", "seq", "payload"],
+      "properties": {
+        "api_v": { "$ref": "#/$defs/api_v" },
+        "type": { "const": "event" },
+        "seq": { "type": "integer", "minimum": 1 },
+        "request_id": { "$ref": "common.schema.json#/$defs/request_id" },
+        "payload": {
+          "type": "object",
+          "required": ["events", "turn"],
+          "properties": {
+            "events": { "type": "array", "items": { "$ref": "event.schema.json" } },
+            "turn": { "$ref": "turn.schema.json" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "snapshot": {
+      "type": "object",
+      "required": ["api_v", "type", "seq", "payload"],
+      "properties": {
+        "api_v": { "$ref": "#/$defs/api_v" },
+        "type": { "const": "snapshot" },
+        "seq": { "type": "integer", "minimum": 1 },
+        "payload": { "$ref": "snapshot.schema.json" }
+      },
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "required": ["api_v", "type", "payload"],
+      "properties": {
+        "api_v": { "$ref": "#/$defs/api_v" },
+        "type": { "const": "error" },
+        "request_id": { "$ref": "common.schema.json#/$defs/request_id" },
+        "payload": { "$ref": "#/$defs/reason" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

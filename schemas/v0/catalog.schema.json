@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/catalog.schema.json",
+  "title": "Text catalog",
+  "description": "Body of GET /i18n/{locale}: text key to ICU MessageFormat message.",
+  "type": "object",
+  "propertyNames": { "$ref": "common.schema.json#/$defs/text_key" },
+  "additionalProperties": { "type": "string", "minLength": 1 }
+}

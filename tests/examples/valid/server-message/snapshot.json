@@ -1,0 +1,22 @@
+{ "api_v": "0.1", "type": "snapshot", "seq": 1,
+  "payload": {
+    "session_id": "s-7f3a91c2",
+    "encounter": { "id": "rift_trial", "name_key": "encounter.rift_trial.name" },
+    "round": 1, "winner": null,
+    "participants": [
+      { "id": "formless_wanderer_1", "kind": "formless", "def_id": "formless_wanderer",
+        "name_key": "creature.formless_wanderer.name", "tags": ["formless", "hostile"],
+        "side": "enemies", "line": "front", "hp": 9, "max_hp": 9, "attack_bonus": 3, "defense": 11,
+        "essence": "cut", "fixed_as": null, "weak_to": null, "slowed": false },
+      { "id": "scribe_1", "kind": "scribe", "player_name": "Ronald", "side": "scribes", "line": "front",
+        "hp": 20, "max_hp": 20, "ink": 6, "max_ink": 6, "attack_bonus": 4, "defense": 13,
+        "arsenal": { "cut": "short_blade", "barrier": "shield" } } ],
+    "turn": { "actor": "scribe_1", "available_actions": [
+      { "action": "attack", "actor_id": "scribe_1",
+        "params": { "target_id": "formless_wanderer_1", "essence": "cut" },
+        "odds": { "needed": 7, "percent": 70, "front_modifier": 0, "strikes": 2 },
+        "strong_against_target": false },
+      { "action": "fix", "actor_id": "scribe_1",
+        "params": { "target_id": "formless_wanderer_1", "form": "shield" },
+        "cost": { "ink": 2, "uses": "action" }, "gives_weakness": null },
+      { "action": "end_turn", "actor_id": "scribe_1", "params": {} } ] } } }

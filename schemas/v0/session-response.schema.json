@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/session-response.schema.json",
+  "title": "Create session response",
+  "description": "Body of the 201 answer to POST /sessions. The token opens /play?token=...",
+  "type": "object",
+  "required": ["session_id", "token", "encounter"],
+  "properties": {
+    "session_id": { "type": "string", "minLength": 1 },
+    "token": { "type": "string", "minLength": 16 },
+    "encounter": { "$ref": "common.schema.json#/$defs/id" }
+  },
+  "additionalProperties": false
+}

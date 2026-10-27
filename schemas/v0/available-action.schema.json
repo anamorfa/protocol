@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/available-action.schema.json",
+  "title": "Available action",
+  "description": "An action the player may take now. Send action, actor_id and params back as the payload of an action message; the other fields only help to draw it.",
+  "type": "object",
+  "allOf": [{ "$ref": "action.schema.json#/$defs/fields" }],
+  "properties": {
+    "odds": {
+      "type": "object",
+      "required": ["needed", "percent", "front_modifier", "strikes"],
+      "properties": {
+        "needed": { "description": "Lowest d20 roll that hits.", "type": "integer", "minimum": 1, "maximum": 20 },
+        "percent": { "type": "integer", "minimum": 5, "maximum": 100 },
+        "front_modifier": { "type": "integer" },
+        "strikes": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "strong_against_target": { "type": "boolean" },
+    "cost": {
+      "type": "object",
+      "required": ["uses"],
+      "properties": {
+        "ink": { "type": "integer", "minimum": 0 },
+        "uses": { "enum": ["movement", "action", "bonus_action", "movement_and_action"] }
+      },
+      "additionalProperties": false
+    },
+    "gives_weakness": { "$ref": "common.schema.json#/$defs/form_or_null" }
+  },
+  "unevaluatedProperties": false
+}
