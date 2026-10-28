@@ -1,4 +1,4 @@
-{ "api_v": "0.2", "type": "event", "seq": 2, "request_id": "c-1",
+{ "api_v": "0.3", "type": "event", "seq": 2, "request_id": "c-1",
   "payload": {
     "events": [
       { "e": "attack_rolled", "actor": "scribe_1", "target": "formless_wanderer_1", "essence": "cut",

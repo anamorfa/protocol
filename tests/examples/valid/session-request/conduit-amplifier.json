@@ -1,0 +1,3 @@
+{ "player_name": "Ana", "encounter": "rift_echoes",
+  "sets": [ { "main_hand": { "essence": "echo", "form": "conduit", "grip": "one_hand" },
+              "off_hand": { "essence": "echo", "form": "amplifier" } } ] }

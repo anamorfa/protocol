@@ -1,4 +1,4 @@
-{ "api_v": "0.2", "type": "event", "seq": 9, "request_id": "c-8",
+{ "api_v": "0.3", "type": "event", "seq": 9, "request_id": "c-8",
   "payload": {
     "events": [
       { "e": "moved", "entity": "scribe_1", "from": "front", "to": "middle" },

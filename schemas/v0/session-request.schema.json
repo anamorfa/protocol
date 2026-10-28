@@ -9,7 +9,7 @@
     "player_name": { "type": "string", "minLength": 1, "maxLength": 32 },
     "encounter": {
       "description": "Optional. Defaults to rift_trial.",
-      "enum": ["rift_trial", "rift_first_steps"]
+      "enum": ["rift_trial", "rift_first_steps", "rift_echoes"]
     },
     "sets": {
       "description": "Optional. The gear sets the Scribe prepares; the first one is active. Defaults to the starting loadout.",

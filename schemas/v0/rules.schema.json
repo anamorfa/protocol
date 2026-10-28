@@ -21,6 +21,7 @@
           "name_key": { "$ref": "common.schema.json#/$defs/text_key" },
           "slot": { "$ref": "common.schema.json#/$defs/slot" },
           "grips": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/grip" }, "minItems": 1 },
+          "pairs_with": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/form" }, "uniqueItems": true, "description": "Off-hand forms only: the main-hand forms this off hand can be held with." },
           "reach": {
             "type": "object", "additionalProperties": false, "required": ["from", "to"],
             "properties": {

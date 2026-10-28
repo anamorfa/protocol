@@ -1,4 +1,4 @@
-{ "api_v": "0.2", "type": "event", "seq": 1,
+{ "api_v": "0.3", "type": "event", "seq": 1,
   "payload": {
     "events": [
       { "e": "initiative_rolled", "entity": "scribe_1", "d20": 12, "total": 14 },

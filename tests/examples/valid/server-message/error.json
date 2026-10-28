@@ -1,1 +1,1 @@
-{ "api_v": "0.2", "type": "error", "payload": { "reason_key": "message.malformed" } }
+{ "api_v": "0.3", "type": "error", "payload": { "reason_key": "message.malformed" } }

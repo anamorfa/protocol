@@ -1,6 +1,6 @@
 # Playing a session
 
-Phase 3 sessions are solo fights: one Scribe against an encounter. Authentication is fake: a name
+Sessions are solo fights: one Scribe against an encounter. Authentication is fake: a name
 is enough.
 
 ## 1. Create a session
@@ -10,10 +10,13 @@ POST /sessions        { "player_name": "Ronald", "seed": 42, "encounter": "rift_
 → 201                 { "session_id": "s-…", "token": "…", "encounter": "rift_trial" }
 ```
 
-Only `player_name` is required. `seed` is 0..2147483647. `encounter` is `rift_trial` (the default)
-or `rift_first_steps`. `sets` holds 1 to `max_sets` gear sets (`GET /rules` gives `max_sets`); the
+Only `player_name` is required. `seed` is 0..2147483647. `encounter` is `rift_trial` (the default),
+`rift_first_steps` or `rift_echoes`. `sets` holds 1 to `max_sets` gear sets (`GET /rules` gives `max_sets`); the
 first one starts active, and without `sets` the Scribe gets the starting loadout. A set is a
 `main_hand` (`essence`, `form`, `grip`) and an optional `off_hand` (`essence`, `form`).
+An off hand must pair with the main hand: `GET /rules` lists, for each off-hand form, the main-hand
+forms it goes with (`pairs_with`). Its attack and damage bonuses add to the main hand's strikes.
+`active_set` is always below the number of sets.
 Sets are addressed by their 0-based index.
 
 Schemas: `session-request`, `session-response`. A bad body answers 400 with a `reason_key`:
@@ -22,6 +25,7 @@ Schemas: `session-request`, `session-response`. A bad body answers 400 with a `r
 - `set.form_not_accepted`: the essence does not accept that form, or the form does not fit the slot;
 - `set.grip_not_allowed`: the form cannot be held with that grip;
 - `set.off_hand_needs_one_hand`: an off hand with a two-handed main hand;
+- `set.off_hand_not_paired`: the off hand does not pair with that main hand;
 - `set.form_not_known`: the Scribe has not mastered that form;
 - `session.too_many_sets`: more than `max_sets` sets;
 - `session.no_sets`: an empty `sets` list.
@@ -52,7 +56,7 @@ Every message is in the envelope (`envelope`, `client-message`, `server-message`
 ## Versions
 
 Every message carries `api_v` (`MAJOR.MINOR`). While the major is 0, a different minor version is
-incompatible: a server on 0.2 answers `message.unsupported_version` to a client on 0.1, and the
+incompatible: a server on 0.3 answers `message.unsupported_version` to a client on 0.2, and the
 other way round.
 
 ## 4. Reconnect

@@ -1,6 +1,6 @@
 {
   "name": "@anamorfa/protocol",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Open protocol for Anamorfa: JSON Schemas and AsyncAPI spec.",
   "license": "MIT",
   "private": true,
