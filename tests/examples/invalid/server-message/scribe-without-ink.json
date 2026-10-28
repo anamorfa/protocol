@@ -1,4 +1,4 @@
-{ "api_v": "0.2", "type": "snapshot", "seq": 1,
+{ "api_v": "0.3", "type": "snapshot", "seq": 1,
   "payload": {
     "session_id": "s-1", "encounter": { "id": "rift_trial", "name_key": "encounter.rift_trial.name" },
     "round": 1, "winner": null,

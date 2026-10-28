@@ -1,2 +1,2 @@
-{ "api_v": "0.2", "type": "action", "request_id": "c-1",
+{ "api_v": "0.3", "type": "action", "request_id": "c-1",
   "payload": { "action": "end_turn", "actor_id": "scribe_1", "params": { "x": 1 } } }

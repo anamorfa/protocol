@@ -1,2 +1,2 @@
-{ "api_v": "0.2", "type": "event",
+{ "api_v": "0.3", "type": "event",
   "payload": { "events": [], "turn": { "actor": null, "available_actions": [] } } }
