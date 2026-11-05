@@ -97,7 +97,12 @@ refresh it and send the new one:
 
 There is no reply when it is accepted. The token must belong to the same player and client and carry
 `play`. If it does not, or if the access expires first (for example because the player revoked the
-client), the server closes the connection with `4403`. Sign in again and start or resume the session.
+client), the server closes the connection with `4403`.
+
+A session lives only as long as its access: once it has expired without a `reauth`, reconnecting to it
+also closes with `4403`, and the fight is lost. Sign in again and start a new one. Keep the token fresh
+(refresh a minute before `exp`) and send `reauth` on every new connection, so a reconnect within the
+token's lifetime resumes the fight.
 
 Sending actions too fast gets an `error` with `rate.limited`; keep doing it and the server closes the
 connection with `4429`.
