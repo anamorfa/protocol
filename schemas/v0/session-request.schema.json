@@ -2,11 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/session-request.schema.json",
   "title": "Create session request",
-  "description": "Body of POST /sessions. Authentication is fake in Phase 3: a name is enough.",
+  "description": "Body of POST /sessions. The player comes from the access token in the Authorization header (Bearer), which must carry the play scope.",
   "type": "object",
-  "required": ["player_name"],
   "properties": {
-    "player_name": { "type": "string", "minLength": 1, "maxLength": 32 },
     "encounter": {
       "description": "Optional. Defaults to rift_trial.",
       "enum": ["rift_trial", "rift_first_steps", "rift_echoes"]

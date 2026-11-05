@@ -2,14 +2,38 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/client-message.schema.json",
   "title": "Client message",
-  "description": "The only message a client sends over /play: an action wrapped in the envelope.",
-  "type": "object",
-  "required": ["api_v", "type", "request_id", "payload"],
-  "properties": {
-    "api_v": { "$ref": "envelope.schema.json#/properties/api_v" },
-    "type": { "const": "action" },
-    "request_id": { "$ref": "common.schema.json#/$defs/request_id" },
-    "payload": { "$ref": "action.schema.json" }
-  },
-  "additionalProperties": false
+  "description": "What a client sends over /play: an action, or a fresh access token that keeps the connection alive.",
+  "oneOf": [
+    { "$ref": "#/$defs/action" },
+    { "$ref": "#/$defs/reauth" }
+  ],
+  "$defs": {
+    "action": {
+      "type": "object",
+      "required": ["api_v", "type", "request_id", "payload"],
+      "properties": {
+        "api_v": { "$ref": "envelope.schema.json#/properties/api_v" },
+        "type": { "const": "action" },
+        "request_id": { "$ref": "common.schema.json#/$defs/request_id" },
+        "payload": { "$ref": "action.schema.json" }
+      },
+      "additionalProperties": false
+    },
+    "reauth": {
+      "description": "Sent before the current access token expires. The token must belong to the same player and client and carry the play scope; otherwise the server closes with 4403.",
+      "type": "object",
+      "required": ["api_v", "type", "payload"],
+      "properties": {
+        "api_v": { "$ref": "envelope.schema.json#/properties/api_v" },
+        "type": { "const": "reauth" },
+        "payload": {
+          "type": "object",
+          "required": ["access_token"],
+          "properties": { "access_token": { "type": "string", "minLength": 1 } },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
 }
