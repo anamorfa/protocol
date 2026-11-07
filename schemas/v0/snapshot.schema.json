@@ -2,30 +2,76 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/snapshot.schema.json",
   "title": "Snapshot",
-  "description": "The whole state of a session's fight, sent on connection.",
+  "description": "The whole state of a session, sent on connection. In world mode the Scribe walks a map and rift is null; in rift mode it fights, and world (null in a fight-only session) is the map it will come back to.",
   "type": "object",
-  "required": ["session_id", "encounter", "round", "winner", "participants", "turn"],
+  "required": ["session_id", "mode", "world", "rift", "turn"],
   "properties": {
     "session_id": { "type": "string", "minLength": 1 },
-    "encounter": {
-      "type": "object",
-      "required": ["id", "name_key"],
-      "properties": {
-        "id": { "$ref": "common.schema.json#/$defs/id" },
-        "name_key": { "$ref": "common.schema.json#/$defs/text_key" }
-      },
-      "additionalProperties": false
-    },
-    "round": { "type": "integer", "minimum": 1 },
-    "winner": { "enum": ["scribes", "enemies", null] },
-    "participants": {
-      "type": "array",
-      "items": { "oneOf": [{ "$ref": "#/$defs/scribe" }, { "$ref": "#/$defs/formless" }] }
-    },
+    "mode": { "enum": ["world", "rift"] },
+    "world": { "oneOf": [{ "$ref": "#/$defs/world" }, { "type": "null" }] },
+    "rift": { "oneOf": [{ "$ref": "#/$defs/rift" }, { "type": "null" }] },
     "turn": { "$ref": "turn.schema.json" }
   },
   "additionalProperties": false,
+  "allOf": [
+    { "if": { "properties": { "mode": { "const": "world" } }, "required": ["mode"] },
+      "then": { "properties": { "world": { "$ref": "#/$defs/world" }, "rift": { "type": "null" } } },
+      "else": { "properties": { "rift": { "$ref": "#/$defs/rift" } } } }
+  ],
   "$defs": {
+    "world": {
+      "type": "object",
+      "required": ["map", "scribe", "bound_anchor", "tiles", "entities", "path"],
+      "properties": {
+        "map": { "$ref": "common.schema.json#/$defs/map_ref" },
+        "scribe": { "$ref": "#/$defs/walker" },
+        "bound_anchor": { "$ref": "common.schema.json#/$defs/id" },
+        "tiles": { "description": "Every tile of the map the Scribe has seen.", "type": "array",
+                   "items": { "$ref": "common.schema.json#/$defs/known_tile" } },
+        "entities": { "description": "The Anchors and groups in sight.", "type": "array",
+                      "items": { "$ref": "common.schema.json#/$defs/world_entity" } },
+        "path": { "description": "The steps still to walk; empty when standing still.", "type": "array",
+                  "items": { "$ref": "common.schema.json#/$defs/tile" } }
+      },
+      "additionalProperties": false
+    },
+    "walker": {
+      "description": "The Scribe on the map.",
+      "type": "object",
+      "required": ["id", "player_name", "at", "facing", "hp", "max_hp", "ink", "max_ink", "attack_bonus", "defense",
+                   "sets", "active_set"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/id" },
+        "player_name": { "type": "string", "minLength": 1 },
+        "at": { "$ref": "common.schema.json#/$defs/tile" },
+        "facing": { "$ref": "common.schema.json#/$defs/facing" },
+        "hp": { "type": "integer", "minimum": 0 },
+        "max_hp": { "type": "integer", "minimum": 1 },
+        "ink": { "type": "integer", "minimum": 0 },
+        "max_ink": { "type": "integer", "minimum": 0 },
+        "attack_bonus": { "type": "integer" },
+        "defense": { "type": "integer", "minimum": 0 },
+        "sets": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/gear_set" }, "minItems": 1 },
+        "active_set": { "description": "0-based index into sets.", "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "rift": {
+      "description": "A fight. group is the map group it started from, null in a fight-only session.",
+      "type": "object",
+      "required": ["group", "encounter", "round", "winner", "participants"],
+      "properties": {
+        "group": { "oneOf": [{ "$ref": "common.schema.json#/$defs/id" }, { "type": "null" }] },
+        "encounter": { "$ref": "common.schema.json#/$defs/named" },
+        "round": { "type": "integer", "minimum": 1 },
+        "winner": { "enum": ["scribes", "enemies", null] },
+        "participants": {
+          "type": "array",
+          "items": { "oneOf": [{ "$ref": "#/$defs/scribe" }, { "$ref": "#/$defs/formless" }] }
+        }
+      },
+      "additionalProperties": false
+    },
     "scribe": {
       "type": "object",
       "required": ["id", "kind", "player_name", "side", "line", "hp", "max_hp", "ink", "max_ink",

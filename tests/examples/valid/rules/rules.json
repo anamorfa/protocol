@@ -24,4 +24,17 @@
     "barrier": { "name_key": "essence.barrier.name", "forms": ["shield"] },
     "echo": { "name_key": "essence.echo.name", "forms": ["conduit", "resonator", "amplifier"] } },
   "weakness_bonus_percent": 50, "max_sets": 2,
-  "ink_cost": { "reshape": 1, "fix": 2 }, "ink_gain": { "every_rounds": 3, "per_downed_enemy": 1 } }
+  "ink_cost": { "reshape": 1, "fix": 2 }, "ink_gain": { "every_rounds": 3, "per_downed_enemy": 1 },
+  "world": {
+    "tick_ms": 250, "vision_radius": 6, "starting_map": "first_clearing",
+    "terrains": {
+      "ground": { "name_key": "terrain.ground.name", "tags": ["ground"],
+                  "blocks_movement": false, "blocks_vision": false, "water": false },
+      "wall": { "name_key": "terrain.wall.name", "tags": ["wall", "solid"],
+                "blocks_movement": true, "blocks_vision": true, "water": false },
+      "water": { "name_key": "terrain.water.name", "tags": ["water", "liquid"],
+                 "blocks_movement": true, "blocks_vision": false, "water": true } },
+    "maps": {
+      "first_clearing": { "id": "first_clearing", "name_key": "map.first_clearing.name",
+                          "region": { "id": "faded_reach", "name_key": "region.faded_reach.name" },
+                          "width": 24, "height": 16 } } } }

@@ -1,17 +1,23 @@
 # Playing a session
 
-Sessions are solo fights: one Scribe against an encounter. Authentication is fake: a name
-is enough.
+A session is one Scribe in the world: it walks a map under fog of war and opens Rifts with the
+enemy groups it meets. A session created with an `encounter` is a single fight instead, as in
+protocol 0.3. Authentication is fake: a name is enough.
 
 ## 1. Create a session
 
 ```
-POST /sessions        { "player_name": "Ronald", "seed": 42, "encounter": "rift_trial", "sets": [ … ] }
-→ 201                 { "session_id": "s-…", "token": "…", "encounter": "rift_trial" }
+POST /sessions        { "player_name": "Ronald", "seed": 42, "map": "first_clearing", "sets": [ … ] }
+→ 201                 { "session_id": "s-…", "token": "…", "map": "first_clearing", "encounter": null }
+
+POST /sessions        { "player_name": "Ronald", "encounter": "rift_trial" }
+→ 201                 { "session_id": "s-…", "token": "…", "map": null, "encounter": "rift_trial" }
 ```
 
-Only `player_name` is required. `seed` is 0..2147483647. `encounter` is `rift_trial` (the default),
-`rift_first_steps` or `rift_echoes`. `sets` holds 1 to `max_sets` gear sets (`GET /rules` gives `max_sets`); the
+Only `player_name` is required. `seed` is 0..2147483647. Without `encounter` the Scribe arrives in
+the world on the start Anchor of `map` (`first_clearing`, the default, or `still_crypt`).
+`encounter` (`rift_trial`, `rift_first_steps` or `rift_echoes`) makes a fight-only session;
+`map` and `encounter` together are invalid. `sets` holds 1 to `max_sets` gear sets (`GET /rules` gives `max_sets`); the
 first one starts active, and without `sets` the Scribe gets the starting loadout. A set is a
 `main_hand` (`essence`, `form`, `grip`) and an optional `off_hand` (`essence`, `form`).
 An off hand must pair with the main hand: `GET /rules` lists, for each off-hand form, the main-hand
@@ -33,6 +39,8 @@ Schemas: `session-request`, `session-response`. A bad body answers 400 with a `r
 ## 2. Connect
 
 `ws://<host>/play?token=<token>`. The server sends one `snapshot` carrying the latest `seq`.
+Its `mode` is `world` (walking: `world` is set, `rift` is null) or `rift` (fighting: `rift` is set,
+and `world` is the map the Scribe will come back to, or null in a fight-only session).
 
 One connection per token: a new one closes the old with code `4409` (`session.replaced`).
 An unknown token closes with `4401` (`session.unknown_token`).
@@ -53,13 +61,42 @@ Every message is in the envelope (`envelope`, `client-message`, `server-message`
 - Malformed messages get an `error` with `message.malformed`, `message.unknown_type` or
   `message.unsupported_version`. The connection stays open.
 
+## 4. Walk the world
+
+- **Known tiles only.** `world.tiles` lists every tile of the current map the Scribe has seen, as
+  `[x, y, terrain]`; x grows to the east, y to the south. Terrain once seen stays known. New tiles
+  arrive in `tiles_revealed` events. `GET /rules` describes each terrain (`world.terrains`).
+- **Entities in sight only.** `world.entities` holds the Anchors and groups the Scribe sees now;
+  `entity_seen` and `entity_lost` keep it up to date. Forget an entity on `entity_lost`.
+- **Walking.** `available_actions` has one `move_to` template with empty `params` and
+  `open_params: ["x", "y"]`: send it with the `x` and `y` of a known tile. The server answers
+  `action_accepted` and an `event` with `path_planned`, then walks one step per tick
+  (`world.tick_ms` in `GET /rules`). Each step is an `event` message **without** `request_id`:
+  `stepped`, then what the step reveals, binds or crosses. The walk ends with `movement_stopped`
+  (`arrived`, `stopped`, `blocked` or `passage`). A new `move_to` replaces the path; `stop` drops it.
+  Walks never cross a passage they do not end on.
+- **Anchors.** Stepping on an Anchor binds it (`anchor_bound`): it is where the Scribe comes back
+  after a lost Rift. `rest`, on an Anchor, restores hp and Ink (`rested`).
+- **Passages.** Stepping on one takes the Scribe to another map (`map_changed`, then the known
+  tiles of that map).
+- **Rifts.** Next to a group in sight, `available_actions` offers `enter_rift {group_id}`. Its
+  `event` holds `rift_entered`, with the participants as they enter, and the fight's opening. From
+  there the fight plays as in section 3. From the rear line, `leave_rift` flees: it costs the action;
+  when no Scribe is left the fight ends with `combat_ended` and a `null` winner. The message that ends
+  the fight also holds `rift_ended` (`won`: the group is gone and the reward is given; `lost`: a
+  `respawned` event follows at the bound Anchor, with full hp and Ink, and the group heals; `fled`:
+  the group stays, wounded), and the Scribe is back on the map.
+- World rejections (`reason_key`): `action.rejected.unknown_tile`, `blocked`, `unreachable`,
+  `already_there`, `not_moving`, `no_anchor`, `unknown_group`, `not_adjacent`, `in_rift`,
+  `not_in_rift`; `leave_rift` away from the rear gives `action.rejected.not_at_rear`.
+
 ## Versions
 
 Every message carries `api_v` (`MAJOR.MINOR`). While the major is 0, a different minor version is
-incompatible: a server on 0.3 answers `message.unsupported_version` to a client on 0.2, and the
+incompatible: a server on 0.4 answers `message.unsupported_version` to a client on 0.3, and the
 other way round.
 
-## 4. Reconnect
+## 5. Reconnect
 
 Keep the highest `seq` you have applied. After a drop, open
 `ws://<host>/play?token=<token>&since=<seq>`: the server resends every `event` message with a
@@ -68,5 +105,6 @@ A `since` that is not a whole number, or is negative, counts as absent: you get 
 
 ## Other endpoints
 
-- `GET /rules` (`rules`): the form wheel, the forms and essences (slots, grips, reach) and the numbers clients may show.
+- `GET /rules` (`rules`): the form wheel, the forms and essences (slots, grips, reach), the numbers clients may show,
+  and the world: terrain, maps, the tick and the vision radius.
 - `GET /i18n/{locale}` (`catalog`): text keys to messages; unknown locales get `en`.

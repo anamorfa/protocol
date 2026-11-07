@@ -1,11 +1,12 @@
 asyncapi: 3.0.0
 info:
   title: Anamorfa real-time protocol
-  version: "0.3.0"
+  version: "0.4.0"
   description: |
     Real-time channel between an Anamorfa client and the authoritative server.
     Create a session with POST /sessions, then open /play?token=<token>.
-    Reconnect with /play?token=<token>&since=<last seq seen>. See docs/session.md.
+    Reconnect with /play?token=<token>&since=<last seq seen>. While the Scribe walks, the server
+    also sends one event message per step, without request_id. See docs/session.md.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT

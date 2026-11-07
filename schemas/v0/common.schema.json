@@ -37,6 +37,49 @@
     },
     "wheel_matchup": { "enum": ["advantage", "neutral", "disadvantage"] },
     "line": { "enum": ["front", "middle", "rear"] },
-    "side": { "enum": ["scribes", "enemies"] }
+    "side": { "enum": ["scribes", "enemies"] },
+    "tile": {
+      "description": "A map tile as [x, y]: x grows to the east, y to the south.",
+      "type": "array", "minItems": 2, "maxItems": 2, "items": false,
+      "prefixItems": [{ "type": "integer", "minimum": 0 }, { "type": "integer", "minimum": 0 }]
+    },
+    "known_tile": {
+      "description": "A tile the Scribe has seen, as [x, y, terrain id].",
+      "type": "array", "minItems": 3, "maxItems": 3, "items": false,
+      "prefixItems": [{ "type": "integer", "minimum": 0 }, { "type": "integer", "minimum": 0 }, { "$ref": "#/$defs/content_id" }]
+    },
+    "facing": { "description": "One of the 8 directions; y grows to the south.", "enum": ["n", "ne", "e", "se", "s", "sw", "w", "nw"] },
+    "named": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name_key"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "name_key": { "$ref": "#/$defs/text_key" } }
+    },
+    "map_ref": {
+      "description": "A map: its name, region and size. Its terrain arrives tile by tile as the Scribe sees it.",
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name_key", "region", "width", "height"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "name_key": { "$ref": "#/$defs/text_key" }, "region": { "$ref": "#/$defs/named" },
+        "width": { "type": "integer", "minimum": 1 }, "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "world_entity": {
+      "description": "An Anchor or an enemy group the Scribe sees.",
+      "oneOf": [
+        { "type": "object", "additionalProperties": false, "required": ["id", "kind", "at"],
+          "properties": { "id": { "$ref": "#/$defs/id" }, "kind": { "const": "anchor" }, "at": { "$ref": "#/$defs/tile" } } },
+        { "type": "object", "additionalProperties": false, "required": ["id", "kind", "at", "encounter", "tags"],
+          "properties": {
+            "id": { "$ref": "#/$defs/id" }, "kind": { "const": "group" }, "at": { "$ref": "#/$defs/tile" },
+            "encounter": {
+              "type": "object", "additionalProperties": false, "required": ["id", "name_key", "level"],
+              "properties": { "id": { "$ref": "#/$defs/id" }, "name_key": { "$ref": "#/$defs/text_key" },
+                              "level": { "type": "integer", "minimum": 1 } }
+            },
+            "tags": { "description": "The tags of the group's creatures, sorted.", "type": "array",
+                      "items": { "$ref": "#/$defs/id" }, "uniqueItems": true }
+          } }
+      ]
+    }
   }
 }

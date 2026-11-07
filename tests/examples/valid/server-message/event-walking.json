@@ -1,0 +1,13 @@
+{ "api_v": "0.4", "type": "event", "seq": 13,
+  "payload": {
+    "events": [
+      { "e": "stepped", "entity": "scribe_1", "from": [4, 3], "to": [5, 4], "facing": "se" },
+      { "e": "tiles_revealed", "map": "first_clearing", "tiles": [ [10, 4, "ground"], [10, 5, "ground"] ] },
+      { "e": "entity_lost", "entity": "anchor_clearing" },
+      { "e": "entity_seen", "entity": { "id": "group_trial", "kind": "group", "at": [11, 8],
+          "encounter": { "id": "rift_trial", "name_key": "encounter.rift_trial.name", "level": 1 },
+          "tags": ["formless", "hostile"] } },
+      { "e": "movement_stopped", "entity": "scribe_1", "reason": "arrived" } ],
+    "turn": { "actor": "scribe_1", "available_actions": [
+      { "action": "move_to", "actor_id": "scribe_1", "params": {}, "open_params": ["x", "y"] },
+      { "action": "enter_rift", "actor_id": "scribe_1", "params": { "group_id": "group_trial" } } ] } } }

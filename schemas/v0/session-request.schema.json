@@ -2,14 +2,18 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/session-request.schema.json",
   "title": "Create session request",
-  "description": "Body of POST /sessions. Authentication is fake in Phase 3: a name is enough.",
+  "description": "Body of POST /sessions. Authentication is still fake: a name is enough. Without encounter the Scribe arrives in the world, on map (or the starting map); with encounter the session is a single fight.",
   "type": "object",
   "required": ["player_name"],
   "properties": {
     "player_name": { "type": "string", "minLength": 1, "maxLength": 32 },
     "encounter": {
-      "description": "Optional. Defaults to rift_trial.",
+      "description": "Optional. A fight-only session against this encounter.",
       "enum": ["rift_trial", "rift_first_steps", "rift_echoes"]
+    },
+    "map": {
+      "description": "Optional. The map where the Scribe arrives, on its start Anchor. Defaults to the starting map.",
+      "enum": ["first_clearing", "still_crypt"]
     },
     "sets": {
       "description": "Optional. The gear sets the Scribe prepares; the first one is active. Defaults to the starting loadout.",
@@ -25,5 +29,6 @@
       "maximum": 2147483647
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "not": { "required": ["encounter", "map"], "properties": { "encounter": true, "map": true } }
 }
