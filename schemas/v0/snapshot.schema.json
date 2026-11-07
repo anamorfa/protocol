@@ -28,7 +28,7 @@
         "bound_anchor": { "$ref": "common.schema.json#/$defs/id" },
         "tiles": { "description": "Every tile of the map the Scribe has seen.", "type": "array",
                    "items": { "$ref": "common.schema.json#/$defs/known_tile" } },
-        "entities": { "description": "The Anchors and groups in sight.", "type": "array",
+        "entities": { "description": "The Anchors, passages and groups in sight.", "type": "array",
                       "items": { "$ref": "common.schema.json#/$defs/world_entity" } },
         "path": { "description": "The steps still to walk; empty when standing still.", "type": "array",
                   "items": { "$ref": "common.schema.json#/$defs/tile" } }

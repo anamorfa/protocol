@@ -4,6 +4,8 @@
       { "e": "stepped", "entity": "scribe_1", "from": [4, 3], "to": [5, 4], "facing": "se" },
       { "e": "tiles_revealed", "map": "first_clearing", "tiles": [ [10, 4, "ground"], [10, 5, "ground"] ] },
       { "e": "entity_lost", "entity": "anchor_clearing" },
+      { "e": "entity_seen", "entity": { "id": "to_still_crypt", "kind": "passage", "at": [22, 14],
+          "to": { "id": "still_crypt", "name_key": "map.still_crypt.name" } } },
       { "e": "entity_seen", "entity": { "id": "group_trial", "kind": "group", "at": [11, 8],
           "encounter": { "id": "rift_trial", "name_key": "encounter.rift_trial.name", "level": 1 },
           "tags": ["formless", "hostile"] } },

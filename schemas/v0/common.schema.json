@@ -64,10 +64,14 @@
       }
     },
     "world_entity": {
-      "description": "An Anchor or an enemy group the Scribe sees.",
+      "description": "An Anchor, a passage to another map or an enemy group the Scribe sees.",
       "oneOf": [
         { "type": "object", "additionalProperties": false, "required": ["id", "kind", "at"],
           "properties": { "id": { "$ref": "#/$defs/id" }, "kind": { "const": "anchor" }, "at": { "$ref": "#/$defs/tile" } } },
+        { "type": "object", "additionalProperties": false, "required": ["id", "kind", "at", "to"],
+          "description": "Stepping on it takes the Scribe to the map to.",
+          "properties": { "id": { "$ref": "#/$defs/id" }, "kind": { "const": "passage" }, "at": { "$ref": "#/$defs/tile" },
+                          "to": { "$ref": "#/$defs/named" } } },
         { "type": "object", "additionalProperties": false, "required": ["id", "kind", "at", "encounter", "tags"],
           "properties": {
             "id": { "$ref": "#/$defs/id" }, "kind": { "const": "group" }, "at": { "$ref": "#/$defs/tile" },
