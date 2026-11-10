@@ -1,0 +1,3 @@
+{ "api_v": "0.4", "type": "event", "seq": 13,
+  "payload": { "events": [ { "e": "entity_seen", "entity": { "id": "to_still_crypt", "kind": "passage", "at": [22, 14] } } ],
+               "turn": { "actor": "scribe_1", "available_actions": [] } } }

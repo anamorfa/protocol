@@ -1,0 +1,14 @@
+{ "api_v": "0.4", "type": "snapshot", "seq": 1,
+  "payload": {
+    "session_id": "s-0b44e1d9", "mode": "world",
+    "world": {
+      "map": { "id": "first_clearing", "name_key": "map.first_clearing.name",
+               "region": { "id": "faded_reach", "name_key": "region.faded_reach.name" }, "width": 24, "height": 16 },
+      "scribe": { "id": "scribe_1", "player_name": "Ronald", "at": [2, 2], "facing": "s",
+                  "hp": 20, "max_hp": 20, "ink": 6, "max_ink": 6, "attack_bonus": 4, "defense": 13,
+                  "sets": [ { "main_hand": { "essence": "cut", "form": "short_blade", "grip": "one_hand" } } ],
+                  "active_set": 0 },
+      "bound_anchor": "anchor_clearing", "tiles": [], "entities": [], "path": [] },
+    "rift": { "group": null, "encounter": { "id": "rift_trial", "name_key": "encounter.rift_trial.name" },
+              "round": 1, "winner": null, "participants": [] },
+    "turn": { "actor": "scribe_1", "available_actions": [] } } }

@@ -1,0 +1,21 @@
+{ "api_v": "0.4", "type": "snapshot", "seq": 12,
+  "payload": {
+    "session_id": "s-0b44e1d9", "mode": "world", "rift": null,
+    "world": {
+      "map": { "id": "first_clearing", "name_key": "map.first_clearing.name",
+               "region": { "id": "faded_reach", "name_key": "region.faded_reach.name" }, "width": 24, "height": 16 },
+      "scribe": { "id": "scribe_1", "player_name": "Ronald", "at": [4, 3], "facing": "se",
+                  "hp": 20, "max_hp": 20, "ink": 6, "max_ink": 6, "attack_bonus": 4, "defense": 13,
+                  "sets": [ { "main_hand": { "essence": "cut", "form": "short_blade", "grip": "one_hand" } } ],
+                  "active_set": 0 },
+      "bound_anchor": "anchor_clearing",
+      "tiles": [ [3, 2, "ground"], [4, 2, "ground"], [5, 2, "ground"], [5, 3, "water"], [4, 4, "ground"] ],
+      "entities": [
+        { "id": "anchor_clearing", "kind": "anchor", "at": [2, 2] },
+        { "id": "group_first_steps", "kind": "group", "at": [8, 6],
+          "encounter": { "id": "rift_first_steps", "name_key": "encounter.rift_first_steps.name", "level": 1 },
+          "tags": ["formless", "hostile"] } ],
+      "path": [ [5, 4], [6, 5] ] },
+    "turn": { "actor": "scribe_1", "available_actions": [
+      { "action": "move_to", "actor_id": "scribe_1", "params": {}, "open_params": ["x", "y"] },
+      { "action": "stop", "actor_id": "scribe_1", "params": {} } ] } } }

@@ -2,13 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/session-response.schema.json",
   "title": "Create session response",
-  "description": "Body of the 201 answer to POST /sessions. The token opens /play?token=...",
+  "description": "Body of the 201 answer to POST /sessions. The token opens /play?token=... Exactly one of map (a world session) and encounter (a fight-only session) is set.",
   "type": "object",
-  "required": ["session_id", "token", "encounter"],
+  "required": ["session_id", "token", "map", "encounter"],
   "properties": {
     "session_id": { "type": "string", "minLength": 1 },
     "token": { "type": "string", "minLength": 16 },
-    "encounter": { "$ref": "common.schema.json#/$defs/id" }
+    "map": { "oneOf": [{ "$ref": "common.schema.json#/$defs/id" }, { "type": "null" }] },
+    "encounter": { "oneOf": [{ "$ref": "common.schema.json#/$defs/id" }, { "type": "null" }] }
   },
   "additionalProperties": false
 }

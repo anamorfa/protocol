@@ -5,8 +5,9 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = new URL("..", import.meta.url).pathname;
+const root = fileURLToPath(new URL("..", import.meta.url));
 const schemaDir = join(root, "schemas", "v0");
 const base = "https://anamorfa.github.io/protocol/schemas/v0/";
 const ajv = new Ajv2020({ strict: true, allowUnionTypes: true, allErrors: true });

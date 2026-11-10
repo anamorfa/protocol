@@ -1,0 +1,14 @@
+{ "api_v": "0.4", "type": "event", "seq": 31, "request_id": "c-20",
+  "payload": {
+    "events": [
+      { "e": "downed", "entity": "scribe_1" },
+      { "e": "combat_ended", "winner": "enemies" },
+      { "e": "rift_ended", "group": "group_trial", "outcome": "lost", "reward": null },
+      { "e": "respawned", "entity": "scribe_1", "anchor": "anchor_clearing",
+        "map": { "id": "first_clearing", "name_key": "map.first_clearing.name",
+                 "region": { "id": "faded_reach", "name_key": "region.faded_reach.name" }, "width": 24, "height": 16 },
+        "at": [2, 2], "hp": 20, "ink": 6 },
+      { "e": "entity_seen", "entity": { "id": "anchor_clearing", "kind": "anchor", "at": [2, 2] } } ],
+    "turn": { "actor": "scribe_1", "available_actions": [
+      { "action": "move_to", "actor_id": "scribe_1", "params": {}, "open_params": ["x", "y"] },
+      { "action": "rest", "actor_id": "scribe_1", "params": {} } ] } } }

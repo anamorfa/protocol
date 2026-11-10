@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/available-action.schema.json",
   "title": "Available action",
-  "description": "An action the player may take now. Send action, actor_id and params back as the payload of an action message; the other fields only help to draw it.",
+  "description": "An action the player may take now. Send action, actor_id and params back as the payload of an action message; the other fields only help to draw it. A move_to is a template: its params are empty and open_params names the params the client fills with the target tile.",
   "type": "object",
   "properties": {
     "odds": {
@@ -25,10 +25,18 @@
         "uses": { "enum": ["movement", "action", "bonus_action", "movement_and_action"] }
       },
       "additionalProperties": false
-    }
+    },
+    "open_params": { "description": "Only on move_to: the params the client fills itself.", "const": ["x", "y"] }
   },
   "allOf": [
-    { "$ref": "action.schema.json#/$defs/fields" },
+    { "if": { "properties": { "action": { "const": "move_to" } }, "required": ["action"] },
+      "then": { "required": ["action", "actor_id", "params", "open_params"],
+                "properties": { "action": true, "actor_id": { "$ref": "common.schema.json#/$defs/id" },
+                                "params": { "type": "object", "maxProperties": 0 }, "open_params": true } },
+      "else": { "allOf": [{ "$ref": "action.schema.json#/$defs/fields" }],
+                "not": { "required": ["open_params"], "properties": { "open_params": true } } } },
+    { "if": { "properties": { "action": { "const": "leave_rift" } }, "required": ["action"] },
+      "then": { "required": ["cost"], "properties": { "cost": { "type": "object", "properties": { "uses": { "const": "action" } } } } } },
     { "if": { "properties": { "action": { "const": "attack" } }, "required": ["action"] },
       "then": { "required": ["wheel"], "properties": { "wheel": true } } },
     { "if": { "properties": { "action": { "enum": ["fix", "reshape"] } }, "required": ["action"] },

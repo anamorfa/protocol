@@ -1,0 +1,14 @@
+{ "api_v": "0.4", "type": "event", "seq": 40,
+  "payload": {
+    "events": [
+      { "e": "stepped", "entity": "scribe_1", "from": [21, 13], "to": [22, 14], "facing": "se" },
+      { "e": "map_changed", "entity": "scribe_1",
+        "map": { "id": "still_crypt", "name_key": "map.still_crypt.name",
+                 "region": { "id": "faded_reach", "name_key": "region.faded_reach.name" }, "width": 20, "height": 14 },
+        "at": [2, 6] },
+      { "e": "tiles_revealed", "map": "still_crypt", "tiles": [ [2, 6, "ground"], [1, 6, "ground"] ] },
+      { "e": "movement_stopped", "entity": "scribe_1", "reason": "arrived" },
+      { "e": "rift_ended", "group": "group_echoes", "outcome": "won", "reward": { "xp": 20, "seals": 5 } },
+      { "e": "anchor_bound", "entity": "scribe_1", "anchor": "anchor_crypt" },
+      { "e": "rested", "entity": "scribe_1", "hp": 20, "ink": 6 } ],
+    "turn": { "actor": "scribe_1", "available_actions": [] } } }
