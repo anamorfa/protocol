@@ -1,0 +1,135 @@
+{
+  "api_v": "0.4",
+  "type": "snapshot",
+  "seq": 20,
+  "payload": {
+    "session_id": "s-0b44e1d9",
+    "mode": "rift",
+    "world": {
+      "map": {
+        "id": "first_clearing",
+        "name_key": "map.first_clearing.name",
+        "region": {
+          "id": "faded_reach",
+          "name_key": "region.faded_reach.name"
+        },
+        "width": 24,
+        "height": 16
+      },
+      "scribe": {
+        "id": "scribe_1",
+        "player_name": "Ronald",
+        "at": [
+          11,
+          7
+        ],
+        "facing": "e",
+        "hp": 20,
+        "max_hp": 20,
+        "ink": 6,
+        "max_ink": 6,
+        "attack_bonus": 4,
+        "defense": 13,
+        "sets": [
+          {
+            "main_hand": {
+              "essence": "pierce",
+              "form": "projectile",
+              "grip": "two_hands"
+            }
+          }
+        ],
+        "active_set": 0
+      },
+      "bound_anchor": "anchor_clearing",
+      "tiles": [
+        [
+          11,
+          7,
+          "ground"
+        ],
+        [
+          11,
+          8,
+          "ground"
+        ]
+      ],
+      "entities": [],
+      "path": []
+    },
+    "rift": {
+      "group": "group_trial",
+      "encounter": {
+        "id": "rift_trial",
+        "name_key": "encounter.rift_trial.name"
+      },
+      "round": 2,
+      "winner": null,
+      "participants": [
+        {
+          "id": "scribe_1",
+          "kind": "scribe",
+          "player_name": "Ronald",
+          "side": "scribes",
+          "line": "rear",
+          "hp": 14,
+          "max_hp": 20,
+          "ink": 4,
+          "max_ink": 6,
+          "attack_bonus": 4,
+          "defense": 13,
+          "sets": [
+            {
+              "main_hand": {
+                "essence": "pierce",
+                "form": "projectile",
+                "grip": "two_hands"
+              }
+            }
+          ],
+          "active_set": 0
+        },
+        {
+          "id": "formless_wanderer_1",
+          "kind": "formless",
+          "def_id": "formless_wanderer",
+          "name_key": "creature.formless_wanderer.name",
+          "tags": [
+            "formless",
+            "hostile"
+          ],
+          "side": "enemies",
+          "line": "front",
+          "hp": 9,
+          "max_hp": 9,
+          "attack_bonus": 3,
+          "defense": 11,
+          "essence": "cut",
+          "form": "short_blade",
+          "grip": "one_hand",
+          "off_hand": null,
+          "fixed": false,
+          "stable": false
+        }
+      ]
+    },
+    "turn": {
+      "actor": "scribe_1",
+      "available_actions": [
+        {
+          "action": "leave_rift",
+          "actor_id": "scribe_1",
+          "params": {},
+          "cost": {
+            "uses": "action"
+          }
+        },
+        {
+          "action": "end_turn",
+          "actor_id": "scribe_1",
+          "params": {}
+        }
+      ]
+    }
+  }
+}

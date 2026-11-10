@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/turn.schema.json",
   "title": "Turn",
-  "description": "Whose turn it is and what they may do. actor is null and available_actions empty when the fight is over.",
+  "description": "Whose turn it is and what they may do. On the map actor is always the Scribe. In a fight, actor is null and available_actions empty once the fight is over.",
   "type": "object",
   "required": ["actor", "available_actions"],
   "properties": {

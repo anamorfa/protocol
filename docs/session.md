@@ -65,7 +65,9 @@ Every message is in the envelope (`envelope`, `client-message`, `server-message`
 
 - **Known tiles only.** `world.tiles` lists every tile of the current map the Scribe has seen, as
   `[x, y, terrain]`; x grows to the east, y to the south. Terrain once seen stays known. New tiles
-  arrive in `tiles_revealed` events. `GET /rules` describes each terrain (`world.terrains`).
+  arrive in `tiles_revealed` events. Right after `map_changed` or `respawned`, `tiles_revealed`
+  carries every known tile of that map, not only new ones, so a client may keep only the current
+  map's tiles. `GET /rules` describes each terrain (`world.terrains`).
 - **Entities in sight only.** `world.entities` holds the Anchors, passages and groups the Scribe sees now;
   `entity_seen` and `entity_lost` keep it up to date. Forget an entity on `entity_lost`.
 - **Walking.** `available_actions` has one `move_to` template with empty `params` and
@@ -74,14 +76,16 @@ Every message is in the envelope (`envelope`, `client-message`, `server-message`
   (`world.tick_ms` in `GET /rules`). Each step is an `event` message **without** `request_id`:
   `stepped`, then what the step reveals, binds or crosses. The walk ends with `movement_stopped`
   (`arrived`, `stopped`, `blocked` or `passage`). A new `move_to` replaces the path; `stop` drops it.
-  Walks never cross a passage they do not end on.
+  Walks never cross a passage they do not end on. A path avoids the groups in sight only, so it never
+  tells where a hidden group stands; a walk that runs into one stops with `blocked`.
 - **Anchors.** Stepping on an Anchor binds it (`anchor_bound`): it is where the Scribe comes back
   after a lost Rift. `rest`, on an Anchor, restores hp and Ink (`rested`).
 - **Passages.** An entity of kind `passage` names the map it leads to (`to`). Stepping on it takes
-  the Scribe there (`map_changed`, then the known tiles of that map).
+  the Scribe there (`map_changed`, then a `tiles_revealed` with every known tile of that map).
 - **Rifts.** Next to a group in sight, `available_actions` offers `enter_rift {group_id}`. Its
   `event` holds `rift_entered`, with the participants as they enter, and the fight's opening. From
-  there the fight plays as in section 3. From the rear line, `leave_rift` flees: it costs the action;
+  there the fight plays as in section 3. From the rear line, `leave_rift` flees: it costs the action
+  and ends the turn, and whoever fled can no longer be targeted;
   when no Scribe is left the fight ends with `combat_ended` and a `null` winner. The message that ends
   the fight also holds `rift_ended` (`won`: the group is gone and the reward is given; `lost`: a
   `respawned` event follows at the bound Anchor, with full hp and Ink, and the group heals; `fled`:

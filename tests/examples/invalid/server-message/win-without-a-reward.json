@@ -1,0 +1,45 @@
+{
+  "api_v": "0.4",
+  "type": "event",
+  "seq": 24,
+  "request_id": "c-14",
+  "payload": {
+    "events": [
+      {
+        "e": "fled",
+        "entity": "scribe_1"
+      },
+      {
+        "e": "combat_ended",
+        "winner": "scribes"
+      },
+      {
+        "e": "rift_ended",
+        "group": "group_trial",
+        "outcome": "won",
+        "reward": null
+      }
+    ],
+    "turn": {
+      "actor": "scribe_1",
+      "available_actions": [
+        {
+          "action": "move_to",
+          "actor_id": "scribe_1",
+          "params": {},
+          "open_params": [
+            "x",
+            "y"
+          ]
+        },
+        {
+          "action": "enter_rift",
+          "actor_id": "scribe_1",
+          "params": {
+            "group_id": "group_trial"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -16,7 +16,14 @@
   "allOf": [
     { "if": { "properties": { "mode": { "const": "world" } }, "required": ["mode"] },
       "then": { "properties": { "world": { "$ref": "#/$defs/world" }, "rift": { "type": "null" } } },
-      "else": { "properties": { "rift": { "$ref": "#/$defs/rift" } } } }
+      "else": { "properties": { "rift": { "$ref": "#/$defs/rift" } } } },
+    { "description": "A Rift opened from a map group has the map to come back to; a fight-only Rift has none.",
+      "if": { "properties": { "mode": { "const": "rift" }, "rift": { "type": "object", "properties": { "group": { "type": "string" } }, "required": ["group"] } },
+              "required": ["mode", "rift"] },
+      "then": { "properties": { "world": { "$ref": "#/$defs/world" } } } },
+    { "if": { "properties": { "mode": { "const": "rift" }, "rift": { "type": "object", "properties": { "group": { "type": "null" } }, "required": ["group"] } },
+              "required": ["mode", "rift"] },
+      "then": { "properties": { "world": { "type": "null" } } } }
   ],
   "$defs": {
     "world": {
@@ -64,7 +71,8 @@
         "group": { "oneOf": [{ "$ref": "common.schema.json#/$defs/id" }, { "type": "null" }] },
         "encounter": { "$ref": "common.schema.json#/$defs/named" },
         "round": { "type": "integer", "minimum": 1 },
-        "winner": { "enum": ["scribes", "enemies", null] },
+        "winner": { "description": "null while the fight goes on. A fight nobody wins (every Scribe fled) happens only in a Rift opened from the map, and the Scribe is then back in world mode, so a rift-mode snapshot never holds a fight that ended that way.",
+                    "enum": ["scribes", "enemies", null] },
         "participants": {
           "type": "array",
           "items": { "oneOf": [{ "$ref": "#/$defs/scribe" }, { "$ref": "#/$defs/formless" }] }

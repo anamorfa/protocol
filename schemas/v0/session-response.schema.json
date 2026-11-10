@@ -11,5 +11,9 @@
     "map": { "oneOf": [{ "$ref": "common.schema.json#/$defs/id" }, { "type": "null" }] },
     "encounter": { "oneOf": [{ "$ref": "common.schema.json#/$defs/id" }, { "type": "null" }] }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "oneOf": [
+    { "properties": { "map": { "type": "string" }, "encounter": { "type": "null" } } },
+    { "properties": { "map": { "type": "null" }, "encounter": { "type": "string" } } }
+  ]
 }
