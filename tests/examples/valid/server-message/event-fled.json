@@ -1,4 +1,4 @@
-{ "api_v": "0.4", "type": "event", "seq": 24, "request_id": "c-14",
+{ "api_v": "0.5", "type": "event", "seq": 24, "request_id": "c-14",
   "payload": {
     "events": [
       { "e": "fled", "entity": "scribe_1" },

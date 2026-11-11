@@ -1,2 +1,2 @@
-{ "api_v": "0.4", "type": "action", "request_id": "c-7",
+{ "api_v": "0.5", "type": "action", "request_id": "c-7",
   "payload": { "action": "leave_rift", "actor_id": "scribe_1", "params": {} } }

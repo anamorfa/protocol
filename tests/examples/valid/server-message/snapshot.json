@@ -1,4 +1,4 @@
-{ "api_v": "0.4", "type": "snapshot", "seq": 1,
+{ "api_v": "0.5", "type": "snapshot", "seq": 1,
   "payload": {
     "session_id": "s-7f3a91c2", "mode": "rift", "world": null,
     "rift": {

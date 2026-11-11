@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/me.schema.json",
+  "title": "Me",
+  "description": "Body of GET /me (scope profile.read): the signed-in player's account.",
+  "type": "object",
+  "required": ["sub", "name"],
+  "properties": {
+    "sub": { "description": "Stable account id.", "type": "string", "minLength": 1 },
+    "name": { "description": "Account name.", "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}

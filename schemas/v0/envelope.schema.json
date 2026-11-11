@@ -12,9 +12,9 @@
       "pattern": "^[0-9]+\\.[0-9]+$"
     },
     "type": {
-      "description": "Message type. Client to server: action. Server to client: action_accepted, action_rejected, event, snapshot, error.",
+      "description": "Message type. Client to server: action, reauth. Server to client: action_accepted, action_rejected, event, snapshot, error.",
       "type": "string",
-      "enum": ["action", "action_accepted", "action_rejected", "event", "snapshot", "error"]
+      "enum": ["action", "reauth", "action_accepted", "action_rejected", "event", "snapshot", "error"]
     },
     "request_id": {
       "description": "Client-chosen ID that links an action to its responses and events.",

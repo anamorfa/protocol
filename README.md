@@ -23,10 +23,11 @@ This repository holds the contract between the server and any client:
 
 ## Status
 
-Protocol 0.4 — the world: maps under fog of war, walking one step per tick, Anchors, passages and
-Rifts opened with enemy groups, fled from the rear. On top of 0.3: forms as content, gear sets,
-off-hand pairing and the five-form wheel, over REST and the `/play` WebSocket with numbered events,
-snapshots and reconnection. Start with [docs/session.md](docs/session.md).
+Protocol 0.5 — accounts: OIDC sign-in with PKCE, scopes and `reauth`. On top of 0.4, the world:
+maps under fog of war, walking one step per tick, Anchors, passages and Rifts opened with enemy
+groups, fled from the rear. And before that: forms as content, gear sets, off-hand pairing and the
+five-form wheel, over REST and the `/play` WebSocket with numbered events, snapshots and
+reconnection. Start with [docs/session.md](docs/session.md).
 
 ## License
 

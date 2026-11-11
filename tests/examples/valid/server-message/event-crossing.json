@@ -1,4 +1,4 @@
-{ "api_v": "0.4", "type": "event", "seq": 40,
+{ "api_v": "0.5", "type": "event", "seq": 40,
   "payload": {
     "events": [
       { "e": "stepped", "entity": "scribe_1", "from": [21, 13], "to": [22, 14], "facing": "se" },
