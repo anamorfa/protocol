@@ -20,7 +20,7 @@
         { "type": "object", "properties": { "action": { "const": "reshape" }, "params": { "$ref": "#/$defs/reshape_params" } } },
         { "type": "object", "properties": { "action": { "const": "fix" }, "params": { "$ref": "#/$defs/fix_params" } } },
         { "type": "object", "properties": { "action": { "const": "move" }, "params": { "$ref": "#/$defs/move_params" } } },
-        { "type": "object", "properties": { "action": { "const": "end_turn" }, "params": { "$ref": "#/$defs/end_turn_params" } } },
+        { "type": "object", "properties": { "action": { "const": "end_turn" }, "params": { "$ref": "#/$defs/no_params" } } },
         { "type": "object", "properties": { "action": { "const": "leave_rift" }, "params": { "$ref": "#/$defs/no_params" } } },
         { "type": "object", "properties": { "action": { "const": "move_to" }, "params": { "$ref": "#/$defs/move_to_params" } } },
         { "type": "object", "properties": { "action": { "const": "stop" }, "params": { "$ref": "#/$defs/no_params" } } },
@@ -53,7 +53,6 @@
       "properties": { "to": { "$ref": "common.schema.json#/$defs/line" } },
       "additionalProperties": false
     },
-    "end_turn_params": { "type": "object", "maxProperties": 0 },
     "no_params": { "type": "object", "maxProperties": 0 },
     "move_to_params": {
       "description": "Walk to this known tile of the current map, one step per tick.",

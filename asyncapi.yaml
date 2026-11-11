@@ -1,7 +1,7 @@
 asyncapi: 3.0.0
 info:
   title: Anamorfa real-time protocol
-  version: "0.4.0"
+  version: "0.4.1"
   description: |
     Real-time channel between an Anamorfa client and the authoritative server.
     Create a session with POST /sessions, then open /play?token=<token>.
