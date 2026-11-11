@@ -1,20 +1,47 @@
 # Playing a session
 
-A session is one Scribe in the world: it walks a map under fog of war and opens Rifts with the
-enemy groups it meets. A session created with an `encounter` is a single fight instead, as in
-protocol 0.3. Authentication is fake: a name is enough.
+A session is one Scribe in the world, played by a signed-in player: it walks a map under fog of
+war and opens Rifts with the enemy groups it meets. A session created with an `encounter` is a
+single fight instead, as in protocol 0.3.
+
+## 0. Sign in
+
+Players sign in with OpenID Connect, Authorization Code with PKCE (S256), against the server's
+Keycloak realm. The discovery document is at `<issuer>/.well-known/openid-configuration`; in local
+development the issuer is `http://localhost:8180/realms/anamorfa`. Clients are registered by the
+Anamorfa team; ask for a client id.
+
+Scopes:
+
+| Scope | Allows |
+| --- | --- |
+| `play` | creating sessions and sending actions |
+| `profile.read` | `GET /me`: the account id and name |
+| `characters.manage` | reserved for characters (not used yet) |
+
+Access tokens last 5 minutes. Refresh them with the refresh token before they expire.
+
+`POST /sessions` takes the access token as `Authorization: Bearer <token>`; the player's name comes
+from the account. Refusals:
+
+| Status | `reason_key` | When |
+| --- | --- | --- |
+| 401 | `auth.missing_token` | no `Authorization: Bearer` header |
+| 401 | `auth.invalid_token` | the token is malformed, forged or expired |
+| 403 | `auth.missing_scope` | the token lacks `play` |
+| 429 | `rate.limited` | too many sessions; `Retry-After` gives the seconds to wait |
 
 ## 1. Create a session
 
 ```
-POST /sessions        { "player_name": "Ronald", "seed": 42, "map": "first_clearing", "sets": [ … ] }
+POST /sessions        { "seed": 42, "map": "first_clearing", "sets": [ … ] }
 → 201                 { "session_id": "s-…", "token": "…", "map": "first_clearing", "encounter": null }
 
-POST /sessions        { "player_name": "Ronald", "encounter": "rift_trial" }
+POST /sessions        { "encounter": "rift_trial" }
 → 201                 { "session_id": "s-…", "token": "…", "map": null, "encounter": "rift_trial" }
 ```
 
-Only `player_name` is required. `seed` is 0..2147483647. Without `encounter` the Scribe arrives in
+Every field is optional. `seed` is 0..2147483647. Without `encounter` the Scribe arrives in
 the world on the start Anchor of `map` (`first_clearing`, the default, or `still_crypt`).
 `encounter` (`rift_trial`, `rift_first_steps` or `rift_echoes`) makes a fight-only session;
 `map` and `encounter` together are invalid. `sets` holds 1 to `max_sets` gear sets (`GET /rules` gives `max_sets`); the
@@ -45,6 +72,15 @@ and `world` is the map the Scribe will come back to, or null in a fight-only ses
 One connection per token: a new one closes the old with code `4409` (`session.replaced`).
 An unknown token closes with `4401` (`session.unknown_token`).
 
+Close codes the server uses:
+
+| Code | Reason key | When |
+| --- | --- | --- |
+| `4401` | `session.unknown_token` | the session token is unknown |
+| `4409` | `session.replaced` | another connection took the session over |
+| `4403` | `auth.revoked` | the player's access expired, was revoked, or lacks `play` (see "Keeping access") |
+| `4429` | `rate.limited` | too many actions, again and again |
+
 ## 3. Play
 
 Every message is in the envelope (`envelope`, `client-message`, `server-message`).
@@ -60,6 +96,25 @@ Every message is in the envelope (`envelope`, `client-message`, `server-message`
   new `turn`. `seq` grows by one per `event` message; the fight's opening is `seq` 1.
 - Malformed messages get an `error` with `message.malformed`, `message.unknown_type` or
   `message.unsupported_version`. The connection stays open.
+
+### Keeping access
+
+The connection stays alive only while the player's access does. Before the access token expires,
+refresh it and send the new one:
+
+    { "api_v": "0.5", "type": "reauth", "payload": { "access_token": "<new token>" } }
+
+There is no reply when it is accepted. The token must belong to the same player and client and carry
+`play`. If it does not, or if the access expires first (for example because the player revoked the
+client), the server closes the connection with `4403`.
+
+A session lives only as long as its access: once it has expired without a `reauth`, reconnecting to it
+also closes with `4403`, and the fight is lost. Sign in again and start a new one. Keep the token fresh
+(refresh a minute before `exp`) and send `reauth` on every new connection, so a reconnect within the
+token's lifetime resumes the fight.
+
+Sending actions too fast gets an `error` with `rate.limited`; keep doing it and the server closes the
+connection with `4429`.
 
 ## 4. Walk the world
 
@@ -97,7 +152,7 @@ Every message is in the envelope (`envelope`, `client-message`, `server-message`
 ## Versions
 
 Every message carries `api_v` (`MAJOR.MINOR`). While the major is 0, a different minor version is
-incompatible: a server on 0.4 answers `message.unsupported_version` to a client on 0.3, and the
+incompatible: a server on 0.5 answers `message.unsupported_version` to a client on 0.4, and the
 other way round.
 
 ## 5. Reconnect
@@ -111,4 +166,5 @@ A `since` that is not a whole number, or is negative, counts as absent: you get 
 
 - `GET /rules` (`rules`): the form wheel, the forms and essences (slots, grips, reach), the numbers clients may show,
   and the world: terrain, maps, the tick and the vision radius.
+- `GET /me` (`me`, Bearer with scope `profile.read`): the account's `sub` and `name`.
 - `GET /i18n/{locale}` (`catalog`): text keys to messages; unknown locales get `en`.

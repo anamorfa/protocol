@@ -1,4 +1,4 @@
-{ "api_v": "0.4", "type": "event", "seq": 19, "request_id": "c-9",
+{ "api_v": "0.5", "type": "event", "seq": 19, "request_id": "c-9",
   "payload": {
     "events": [
       { "e": "rift_entered", "group": "group_trial",

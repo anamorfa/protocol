@@ -1,4 +1,4 @@
-{ "api_v": "0.4", "type": "event", "seq": 12, "request_id": "c-5",
+{ "api_v": "0.5", "type": "event", "seq": 12, "request_id": "c-5",
   "payload": {
     "events": [ { "e": "path_planned", "entity": "scribe_1", "path": [ [5, 4], [6, 5] ] } ],
     "turn": { "actor": "scribe_1", "available_actions": [
