@@ -4,6 +4,11 @@
   "title": "Common definitions",
   "description": "Identifiers shared by the other schemas.",
   "$defs": {
+    "uuid": {
+      "description": "A character id.",
+      "type": "string",
+      "format": "uuid"
+    },
     "id": {
       "description": "Entity, definition or encounter id, e.g. scribe_1, formless_wanderer, rift_trial.",
       "type": "string",
@@ -60,7 +65,8 @@
       "required": ["id", "name_key", "region", "width", "height"],
       "properties": {
         "id": { "$ref": "#/$defs/id" }, "name_key": { "$ref": "#/$defs/text_key" }, "region": { "$ref": "#/$defs/named" },
-        "width": { "type": "integer", "minimum": 1 }, "height": { "type": "integer", "minimum": 1 }
+        "width": { "type": "integer", "minimum": 1 }, "height": { "type": "integer", "minimum": 1 },
+        "obsolete": { "const": true, "description": "Only in GET /rules, and only for a map content no longer uses: Scribes on it are moved to its replacement." }
       }
     },
     "world_entity": {

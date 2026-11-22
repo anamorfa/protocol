@@ -1,0 +1,48 @@
+{
+  "api_v": "0.6",
+  "type": "event",
+  "seq": 12,
+  "payload": {
+    "events": [
+      {
+        "e": "sets_changed",
+        "entity": "scribe_1",
+        "sets": [
+          {
+            "main_hand": {
+              "essence": "cut",
+              "form": "short_blade",
+              "grip": "one_hand"
+            },
+            "off_hand": {
+              "essence": "barrier",
+              "form": "shield"
+            }
+          },
+          {
+            "main_hand": {
+              "essence": "pierce",
+              "form": "projectile",
+              "grip": "two_hands"
+            }
+          }
+        ],
+        "active_set": 0
+      }
+    ],
+    "turn": {
+      "actor": "scribe_1",
+      "available_actions": [
+        {
+          "action": "move_to",
+          "actor_id": "scribe_1",
+          "params": {},
+          "open_params": [
+            "x",
+            "y"
+          ]
+        }
+      ]
+    }
+  }
+}

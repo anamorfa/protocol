@@ -1,6 +1,6 @@
-{ "api_v": "0.5", "type": "snapshot", "seq": 12,
+{ "api_v": "0.6", "type": "snapshot", "seq": 12,
   "payload": {
-    "session_id": "s-0b44e1d9", "mode": "world", "rift": null,
+    "session_id": "s-0b44e1d9", "character_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7", "mode": "world", "rift": null,
     "world": {
       "map": { "id": "first_clearing", "name_key": "map.first_clearing.name",
                "region": { "id": "faded_reach", "name_key": "region.faded_reach.name" }, "width": 24, "height": 16 },

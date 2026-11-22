@@ -1,0 +1,43 @@
+{
+  "api_v": "0.6",
+  "type": "event",
+  "seq": 35,
+  "payload": {
+    "events": [
+      {
+        "e": "turn_timed_out",
+        "entity": "scribe_1",
+        "missed": 3
+      },
+      {
+        "e": "removed",
+        "entity": "scribe_1",
+        "reason": "missed_turns"
+      },
+      {
+        "e": "combat_ended",
+        "winner": null
+      },
+      {
+        "e": "rift_ended",
+        "group": "group_trial",
+        "outcome": "fled",
+        "reward": null
+      }
+    ],
+    "turn": {
+      "actor": "scribe_1",
+      "available_actions": [
+        {
+          "action": "move_to",
+          "actor_id": "scribe_1",
+          "params": {},
+          "open_params": [
+            "x",
+            "y"
+          ]
+        }
+      ]
+    }
+  }
+}

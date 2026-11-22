@@ -2,12 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/turn.schema.json",
   "title": "Turn",
-  "description": "Whose turn it is and what they may do. On the map actor is always the Scribe. In a fight, actor is null and available_actions empty once the fight is over.",
+  "description": "Whose turn it is and what they may do. On the map actor is always the Scribe. In a fight, actor is null and available_actions empty once the fight is over. While a Scribe's fight turn runs, time_left_ms and reserve_left_ms say how long it has, measured when the message is sent: durations, because the client's clock may be off. On the map they are absent.",
   "type": "object",
   "required": ["actor", "available_actions"],
   "properties": {
     "actor": { "type": ["string", "null"], "pattern": "^[a-z][a-z0-9_]*$" },
-    "available_actions": { "type": "array", "items": { "$ref": "available-action.schema.json" } }
+    "available_actions": { "type": "array", "items": { "$ref": "available-action.schema.json" } },
+    "time_left_ms": { "description": "Time left in this turn before the reserve starts to run.", "type": "integer", "minimum": 0 },
+    "reserve_left_ms": { "description": "The Scribe's reserve for the rest of the fight. When both reach 0 the server ends the turn (turn_timed_out).", "type": "integer", "minimum": 0 }
   },
   "additionalProperties": false
 }

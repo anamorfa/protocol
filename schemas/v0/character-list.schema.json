@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/character-list.schema.json",
+  "title": "Character list",
+  "description": "Body of GET /characters (scope profile.read): the signed-in account's characters.",
+  "type": "object",
+  "required": ["characters"],
+  "properties": {
+    "characters": { "type": "array", "items": { "$ref": "character.schema.json" } }
+  },
+  "additionalProperties": false
+}

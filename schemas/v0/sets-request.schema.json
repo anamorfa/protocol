@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/sets-request.schema.json",
+  "title": "Change sets request",
+  "description": "Body of PUT /characters/{id}/sets (scope characters.manage). Free outside Rifts; refused with character.in_rift during a fight. If the character's session is open, its client gets a sets_changed event.",
+  "type": "object",
+  "required": ["sets"],
+  "properties": {
+    "sets": { "$ref": "session-request.schema.json#/$defs/sets" }
+  },
+  "additionalProperties": false
+}

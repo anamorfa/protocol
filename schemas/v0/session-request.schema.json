@@ -2,31 +2,44 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/session-request.schema.json",
   "title": "Create session request",
-  "description": "Body of POST /sessions. The player comes from the access token in the Authorization header (Bearer), which must carry the play scope. Without encounter the Scribe arrives in the world, on map (or the starting map); with encounter the session is a single fight.",
+  "description": "Body of POST /sessions. The player comes from the access token in the Authorization header (Bearer), which must carry the play scope. Either play one of the account's characters in the world, or train: a single fight against an encounter, with no character. Opening a session closes the account's open session, if any (close code 4409).",
   "type": "object",
-  "properties": {
-    "encounter": {
-      "description": "Optional. A fight-only session against this encounter.",
-      "enum": ["rift_trial", "rift_first_steps", "rift_echoes"]
+  "oneOf": [
+    {
+      "title": "Play a character",
+      "description": "Opens or resumes the character where it is, a fight in progress included. Its map and sets belong to it (see POST /characters).",
+      "type": "object",
+      "required": ["character_id"],
+      "properties": { "character_id": { "$ref": "common.schema.json#/$defs/uuid" } },
+      "additionalProperties": false
     },
-    "map": {
-      "description": "Optional. The map where the Scribe arrives, on its start Anchor. Defaults to the starting map.",
-      "enum": ["first_clearing", "still_crypt"]
-    },
+    {
+      "title": "Train",
+      "description": "A fight-only session against an encounter. Changes no character.",
+      "type": "object",
+      "required": ["encounter"],
+      "properties": {
+        "encounter": { "enum": ["rift_trial", "rift_first_steps", "rift_echoes"] },
+        "sets": {
+          "description": "Optional. The gear sets the Scribe prepares; the first one is active. Defaults to the starting loadout.",
+          "$ref": "#/$defs/sets"
+        },
+        "seed": {
+          "description": "Optional. The same seed and the same actions always give the same fight.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
     "sets": {
-      "description": "Optional. The gear sets the Scribe prepares; the first one is active. Defaults to the starting loadout.",
       "type": "array",
       "items": { "$ref": "common.schema.json#/$defs/gear_set" },
       "minItems": 1,
       "maxItems": 2
-    },
-    "seed": {
-      "description": "Optional. The same seed and the same actions always give the same fight.",
-      "type": "integer",
-      "minimum": 0,
-      "maximum": 2147483647
     }
-  },
-  "additionalProperties": false,
-  "not": { "required": ["encounter", "map"], "properties": { "encounter": true, "map": true } }
+  }
 }
