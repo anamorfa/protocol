@@ -119,8 +119,10 @@ the `character_id` played (null in training); `player_name` is the character's n
 
 **Content changes.** Content can retire a form, an essence, a map, an Anchor or a group, naming a
 replacement. When a character loads after such a change, what it held or where it stood moves to the
-replacement, and the first `event` after the snapshot holds `content_converted` with each change
-(`{kind, from, to}`). For `kind: set`, `from` and `to` are the set's 1-based number: that set broke the
+replacement, and the `event` that comes right after the snapshot holds `content_converted` with each
+change (`{kind, from, to}`). That event carries the snapshot's own `seq`: the snapshot already shows
+the converted state, and the event only tells what changed. A client that reconnects with `since`
+finds it in the replay instead. For `kind: set`, `from` and `to` are the set's 1-based number: that set broke the
 rules once converted and became the starting set. A character in a fight is converted when the fight
 ends.
 
@@ -186,7 +188,8 @@ Only Scribes' turns have a clock; enemy turns resolve at once.
   turns in a row; any action resets it. Spent reserve does not come back.
 - After 3 missed turns in a row (`rift.missed_turns_before_removal`), the Scribe is taken out of the
   Rift from any line: `removed {entity, reason: "missed_turns"}`. It counts as a flight: on the map
-  the group keeps its wounds; in training the fight, and the session, end.
+  the group keeps its wounds; in training the fight, and the session, end: the connection closes
+  with code `1000` and reason `session.training_over`.
 - Each clock event comes in an `event` message without `request_id`, like a step of a walk.
 
 ## 5. Walk the world
