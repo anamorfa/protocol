@@ -23,7 +23,10 @@ This repository holds the contract between the server and any client:
 
 ## Status
 
-Protocol 0.5 — accounts: OIDC sign-in with PKCE, scopes and `reauth`. On top of 0.4, the world:
+Protocol 0.6 — persistence: characters that outlive sessions (`/characters`), one open session per
+account, answers sent once stored, a turn clock in fights (`turn_timed_out`, `removed`), and content
+that retires definitions (`content_converted`). On top of 0.5, accounts: OIDC sign-in with PKCE,
+scopes and `reauth`. And 0.4, the world:
 maps under fog of war, walking one step per tick, Anchors, passages and Rifts opened with enemy
 groups, fled from the rear. And before that: forms as content, gear sets, off-hand pairing and the
 five-form wheel, over REST and the `/play` WebSocket with numbered events, snapshots and

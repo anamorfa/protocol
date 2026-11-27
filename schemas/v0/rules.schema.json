@@ -22,6 +22,7 @@
           "slot": { "$ref": "common.schema.json#/$defs/slot" },
           "grips": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/grip" }, "minItems": 1 },
           "pairs_with": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/form" }, "uniqueItems": true, "description": "Off-hand forms only: the main-hand forms this off hand can be held with." },
+          "obsolete": { "const": true, "description": "Present only when content no longer makes it: hide it when building sets; characters holding it are moved to its replacement when they load." },
           "reach": {
             "type": "object", "additionalProperties": false, "required": ["from", "to"],
             "properties": {
@@ -39,7 +40,8 @@
         "type": "object", "additionalProperties": false, "required": ["name_key", "forms"],
         "properties": {
           "name_key": { "$ref": "common.schema.json#/$defs/text_key" },
-          "forms": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/form" } }
+          "forms": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/form" } },
+          "obsolete": { "const": true, "description": "Present only when content no longer makes it: hide it when building sets; characters holding it are moved to its replacement when they load." }
         }
       }
     },

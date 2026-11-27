@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/character-request.schema.json",
+  "title": "Create character request",
+  "description": "Body of POST /characters (scope characters.manage). The Scribe starts on the start Anchor of map, with sets or the starting loadout. Refused with character.invalid_name, character.name_taken, character.too_many, set.obsolete or a set reason key.",
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+    "name": { "$ref": "character.schema.json#/$defs/name" },
+    "sets": {
+      "description": "Optional. The gear sets the Scribe prepares; the first one is active. Defaults to the starting loadout.",
+      "$ref": "session-request.schema.json#/$defs/sets"
+    },
+    "map": {
+      "description": "Optional. The map where the Scribe starts. Defaults to the starting map.",
+      "enum": ["first_clearing", "still_crypt"]
+    }
+  },
+  "additionalProperties": false
+}

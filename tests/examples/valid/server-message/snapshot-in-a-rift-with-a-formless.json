@@ -1,9 +1,10 @@
 {
-  "api_v": "0.5",
+  "api_v": "0.6",
   "type": "snapshot",
   "seq": 20,
   "payload": {
     "session_id": "s-0b44e1d9",
+    "character_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
     "mode": "rift",
     "world": {
       "map": {
@@ -115,6 +116,8 @@
     },
     "turn": {
       "actor": "scribe_1",
+      "time_left_ms": 30000,
+      "reserve_left_ms": 60000,
       "available_actions": [
         {
           "action": "leave_rift",

@@ -1,6 +1,6 @@
-{ "api_v": "0.5", "type": "snapshot", "seq": 20,
+{ "api_v": "0.6", "type": "snapshot", "seq": 20,
   "payload": {
-    "session_id": "s-0b44e1d9", "mode": "rift",
+    "session_id": "s-0b44e1d9", "character_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7", "mode": "rift",
     "world": {
       "map": { "id": "first_clearing", "name_key": "map.first_clearing.name",
                "region": { "id": "faded_reach", "name_key": "region.faded_reach.name" }, "width": 24, "height": 16 },
@@ -19,6 +19,6 @@
           "hp": 14, "max_hp": 20, "ink": 4, "max_ink": 6, "attack_bonus": 4, "defense": 13,
           "sets": [ { "main_hand": { "essence": "pierce", "form": "projectile", "grip": "two_hands" } } ],
           "active_set": 0 } ] },
-    "turn": { "actor": "scribe_1", "available_actions": [
+    "turn": { "actor": "scribe_1", "time_left_ms": 21500, "reserve_left_ms": 60000, "available_actions": [
       { "action": "leave_rift", "actor_id": "scribe_1", "params": {}, "cost": { "uses": "action" } },
       { "action": "end_turn", "actor_id": "scribe_1", "params": {} } ] } } }

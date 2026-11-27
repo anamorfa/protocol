@@ -17,9 +17,11 @@
       "enum": ["action", "reauth", "action_accepted", "action_rejected", "event", "snapshot", "error"]
     },
     "request_id": {
-      "description": "Client-chosen ID that links an action to its responses and events.",
+      "description": "Client-chosen ID that links an action to its responses and events: 1 to 64 printable ASCII characters.",
       "type": "string",
-      "maxLength": 64
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[\\x20-\\x7E]+$"
     },
     "seq": {
       "description": "Server event sequence number, strictly increasing per session. Used to resume after reconnecting.",

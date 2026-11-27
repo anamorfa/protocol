@@ -1,6 +1,6 @@
-{ "api_v": "0.5", "type": "snapshot", "seq": 1,
+{ "api_v": "0.6", "type": "snapshot", "seq": 1,
   "payload": {
-    "session_id": "s-7f3a91c2", "mode": "rift", "world": null,
+    "session_id": "s-7f3a91c2", "character_id": null, "mode": "rift", "world": null,
     "rift": {
     "group": null,
     "encounter": { "id": "rift_trial", "name_key": "encounter.rift_trial.name" },
@@ -18,7 +18,7 @@
             "off_hand": { "essence": "barrier", "form": "shield" } },
           { "main_hand": { "essence": "pierce", "form": "projectile", "grip": "two_hands" } } ],
         "active_set": 0 } ] },
-    "turn": { "actor": "scribe_1", "available_actions": [
+    "turn": { "actor": "scribe_1", "time_left_ms": 30000, "reserve_left_ms": 42000, "available_actions": [
       { "action": "attack", "actor_id": "scribe_1",
         "params": { "target_id": "formless_wanderer_1" },
         "odds": { "needed": 7, "percent": 70, "front_modifier": 0, "strikes": 2 },

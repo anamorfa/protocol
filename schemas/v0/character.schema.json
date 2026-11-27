@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anamorfa.github.io/protocol/schemas/v0/character.schema.json",
+  "title": "Character",
+  "description": "One of the account's characters, as POST /characters answers it and GET /characters lists it.",
+  "type": "object",
+  "required": ["id", "name", "map", "in_rift"],
+  "properties": {
+    "id": { "$ref": "common.schema.json#/$defs/uuid" },
+    "name": { "$ref": "#/$defs/name" },
+    "map": { "description": "The map the Scribe stands on.", "$ref": "common.schema.json#/$defs/id" },
+    "in_rift": { "description": "Whether it is in a fight; its sets cannot change until the fight ends.", "type": "boolean" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "name": {
+      "description": "Trimmed; letters, digits, spaces, - and _. Its length limits come from the server's balance (3 to 20 today).",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 20,
+      "pattern": "^[\\p{L}\\p{N}_-](?:[\\p{L}\\p{N} _-]*[\\p{L}\\p{N}_-])?$"
+    }
+  }
+}

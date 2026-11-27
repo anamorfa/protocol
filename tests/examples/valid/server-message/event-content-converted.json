@@ -1,0 +1,43 @@
+{
+  "api_v": "0.6",
+  "type": "event",
+  "seq": 2,
+  "payload": {
+    "events": [
+      {
+        "e": "content_converted",
+        "changes": [
+          {
+            "kind": "form",
+            "from": "polearm",
+            "to": "short_blade"
+          },
+          {
+            "kind": "set",
+            "from": "2",
+            "to": "2"
+          },
+          {
+            "kind": "anchor",
+            "from": "anchor_old",
+            "to": "anchor_clearing"
+          }
+        ]
+      }
+    ],
+    "turn": {
+      "actor": "scribe_1",
+      "available_actions": [
+        {
+          "action": "move_to",
+          "actor_id": "scribe_1",
+          "params": {},
+          "open_params": [
+            "x",
+            "y"
+          ]
+        }
+      ]
+    }
+  }
+}

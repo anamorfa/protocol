@@ -1,0 +1,1 @@
+{"api_v": "0.6", "type": "event", "seq": 5, "payload": {"events": [{"e": "turn_timed_out", "entity": "scribe_1", "missed": 0}], "turn": {"actor": "scribe_1", "available_actions": [{"action": "move_to", "actor_id": "scribe_1", "params": {}, "open_params": ["x", "y"]}]}}}

@@ -2,11 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://anamorfa.github.io/protocol/schemas/v0/snapshot.schema.json",
   "title": "Snapshot",
-  "description": "The whole state of a session, sent on connection. In world mode the Scribe walks a map and rift is null; in rift mode it fights, and world (null in a fight-only session) is the map it will come back to.",
+  "description": "The whole state of a session, sent on connection. In world mode the Scribe walks a map and rift is null; in rift mode it fights, and world (null in a fight-only session) is the map it will come back to. player_name is the character's name.",
   "type": "object",
-  "required": ["session_id", "mode", "world", "rift", "turn"],
+  "required": ["session_id", "character_id", "mode", "world", "rift", "turn"],
   "properties": {
     "session_id": { "type": "string", "minLength": 1 },
+    "character_id": { "description": "The character played; null in a training session.", "oneOf": [{ "$ref": "common.schema.json#/$defs/uuid" }, { "type": "null" }] },
     "mode": { "enum": ["world", "rift"] },
     "world": { "oneOf": [{ "$ref": "#/$defs/world" }, { "type": "null" }] },
     "rift": { "oneOf": [{ "$ref": "#/$defs/rift" }, { "type": "null" }] },
@@ -23,7 +24,14 @@
       "then": { "properties": { "world": { "$ref": "#/$defs/world" } } } },
     { "if": { "properties": { "mode": { "const": "rift" }, "rift": { "type": "object", "properties": { "group": { "type": "null" } }, "required": ["group"] } },
               "required": ["mode", "rift"] },
-      "then": { "properties": { "world": { "type": "null" } } } }
+      "then": { "properties": { "world": { "type": "null" } } } },
+    { "description": "A Scribe's turn in a fight has a clock; the map has none.",
+      "if": { "properties": { "mode": { "const": "rift" }, "turn": { "type": "object", "properties": { "actor": { "type": "string" } } } },
+              "required": ["mode"] },
+      "then": { "properties": { "turn": { "type": "object", "properties": { "time_left_ms": true, "reserve_left_ms": true },
+                                             "required": ["time_left_ms", "reserve_left_ms"] } } } },
+    { "if": { "properties": { "mode": { "const": "world" } }, "required": ["mode"] },
+      "then": { "properties": { "turn": { "type": "object", "properties": { "time_left_ms": false, "reserve_left_ms": false } } } } }
   ],
   "$defs": {
     "world": {
