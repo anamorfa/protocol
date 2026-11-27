@@ -57,6 +57,8 @@ Schemas: `character-request`, `character`, `character-list`, `sets-request`.
 - Sets change freely outside Rifts. If the character's session is open, its client gets a
   `sets_changed` event with the new sets.
 - A character of another account answers as if it did not exist (`404`).
+- Creating a character and changing sets share one limit per player: past it, `429` with
+  `rate.limited` and `Retry-After`, as for sessions.
 
 Refusals, besides the sign-in ones of section 0 and the set keys of section 2:
 
@@ -137,13 +139,14 @@ Close codes the server uses:
 | `4409` | `session.replaced` | another connection took the session over, or the account opened another session |
 | `4403` | `auth.revoked` | the player's access expired, was revoked, or lacks `play` (see "Keeping access") |
 | `4429` | `rate.limited` | too many actions, again and again |
+| `1011` | `server.storage_error` | the server could not store what the session did; the session is closed and what was not stored is lost. Open a new session for the character: it starts from what was stored. Reconnecting to the old token closes with `4401` |
 
 ## 4. Play
 
 Every message is in the envelope (`envelope`, `client-message`, `server-message`).
 
 - Pick an entry of `turn.available_actions` and send its `action`, `actor_id` and `params` as the
-  payload of an `action` message, with your own `request_id`.
+  payload of an `action` message, with your own `request_id` (1 to 64 printable ASCII characters).
 - The server answers `action_accepted` and then one `event` message, or `action_rejected` with a
   `reason_key`. Both come once the result is stored. When the server cannot store it, the action
   is rejected with `server.storage_unavailable` and nothing happened: try again shortly.
@@ -237,6 +240,8 @@ Keep the highest `seq` you have applied. After a drop, open
 `ws://<host>/play?token=<token>&since=<seq>`: the server resends every `event` message with a
 higher `seq`, in order, and nothing else. Without `since` you get a fresh `snapshot`.
 A `since` that is not a whole number, or is negative, counts as absent: you get a snapshot.
+A `since` too far behind the session (more than the server replays, 1000 messages by default), or a
+replay the server cannot read, also gets a snapshot.
 
 This works across server restarts: the messages are read back from storage. After a restart the
 turn in progress starts again with its full time (the time the server was down does not count) and

@@ -19,7 +19,7 @@
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$"
     },
-    "request_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "request_id": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[\\x20-\\x7E]+$" },
     "content_id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
     "essence": { "$ref": "#/$defs/content_id", "description": "Essence id from content, e.g. cut, pierce." },
     "form": { "$ref": "#/$defs/content_id", "description": "Form id from content, e.g. short_blade, projectile." },
